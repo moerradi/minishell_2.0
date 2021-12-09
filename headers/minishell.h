@@ -1,6 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# include "libft/libft.h"
+# include "../libs/libft/libft.h"
+# include "../libs/minidict/minidict.h"
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -19,10 +20,8 @@ typedef struct		s_cmd
 {
 }					t_cmd;
 
-typedef struct		s_envvar
-{
-	char	*key;
-	char	*value;
-}					t_envvar;
+
+
+extern t_dict	*g_env;
 
 #endif

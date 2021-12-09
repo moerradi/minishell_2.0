@@ -1,5 +1,5 @@
-#include "minishell.h"
-#include <stdlib.h>
+#include "../headers/minishell.h"
+
 
 void	print_arrow(bool isred)
 {
@@ -7,7 +7,16 @@ void	print_arrow(bool isred)
 		printf("\033[0;31m➜\033[0m  ");
 	else
 		printf("\033[0;32m➜\033[0m  ");
+}
 
+char	*ms_get_env(char *var)
+{
+
+}
+
+int		get_last_exit_code()
+{
+	return (ft_atoi(ms_get_env("?")));
 }
 
 t_cmd	parse_cmd(char	*command)
@@ -26,18 +35,20 @@ char	*prompt(void)
 	char	*raw_cmd;
 
 	cwd = getcwd(buf, 4096);
+	print_arrow((get_last_exit_code() != 0));
 	raw_cmd = readline(ft_strrchr(cwd, '/') + 1);
 
 	return (raw_cmd);
 }
 
-int		main()
+
+int		main(int argc, char **argv, char **vars)
 {
 	char	*raw_cmd;
 	t_cmd	parsed_cmd;
 
 	//set up environment varibales as a global variable 
-	set_envs();
+	parse_env(vars);
 
 	// prompt infinite loop
 	while (1)
@@ -49,8 +60,8 @@ int		main()
 			add_history(raw_cmd);
 		// parse command
 		parsed_cmd = parse_cmd(raw_cmd);
-		
+		free(raw_cmd);
 		run_cmd(parsed_cmd);
-		post_cmd_clenup(raw_cmd, parsed_cmd);
+		// post_cmd_clenup(raw_cmd, parsed_cmd);
 	}
 }
