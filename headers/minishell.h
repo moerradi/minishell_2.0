@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/09 15:16:44 by moerradi          #+#    #+#             */
+/*   Updated: 2021/12/14 19:15:36 by moerradi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "../libs/libft/libft.h"
@@ -16,9 +28,13 @@
 # include <string.h>
 # include <errno.h>
 
-typedef struct		s_cmd
+typedef	struct		s_pipe
 {
-}					t_cmd;
+	char	*output_file;
+	char	*input_file;
+	char	*command;
+	char	**args;
+}					t_pipe;
 
 
 

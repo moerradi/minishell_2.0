@@ -65,6 +65,7 @@ void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 char				*ft_strchr_s(const char *s, int c);
 char				*ft_strndup(const char *src, size_t n);
+int					ft_strcmp(const char *s1, const char *s2);
 int					get_next_line(int fd, char **line);
 t_list				*ft_lstnew(void *content);
 void				ft_lstadd_front(t_list **alst, t_list *new);
