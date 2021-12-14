@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 14:32:47 by moerradi          #+#    #+#             */
-/*   Updated: 2021/12/11 17:45:48 by moerradi         ###   ########.fr       */
+/*   Created: 2021/12/14 19:00:08 by moerradi          #+#    #+#             */
+/*   Updated: 2021/12/14 19:11:13 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers/minishell.h"
+#include "libft.h"
 
-int		cd(char **args, int args_count)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	int	err_tmp;
+	size_t	i;
 
-	//if (args_count == 0)
-		// cwd $HOME
-	/*else*/ if (args_count == 1)
-	{
-		if(chdir(args[0]) == -1)
-		{
-			err_tmp = errno;
-			printf("cd: %s: %s\n", args[0], strerror(err_tmp));
-		}
-		return (0);
-	}
-	else
-	{
-		printf("cd: too many arguments\n");
-		return (0);
-	}
+	i = 0;
+	while (s1[i] && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
