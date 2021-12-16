@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:16:44 by moerradi          #+#    #+#             */
-/*   Updated: 2021/12/16 13:03:18 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2021/12/16 13:35:21 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 # include <stdbool.h>
 # include <string.h>
 # include <errno.h>
+
+#define ENV_MODE 13
+#define EXPORT_MODE 37
 
 typedef	struct		s_pipe
 {

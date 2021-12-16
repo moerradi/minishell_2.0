@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 20:33:08 by kdrissi-          #+#    #+#             */
-/*   Updated: 2021/12/15 20:35:34 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2021/12/16 13:17:01 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,17 @@ void	mdict_delone(t_dict **dict)
 	free((*dict)->value);
 	free(*dict);
 }
+
 void	mdict_remove_node(t_dict **dict, char *key)
 {
-	t_dict *tmp;
-	t_dict *hold;
+	t_dict	*tmp;
+	t_dict	*hold;
 
-	if(!ft_strcmp(tmp->key, key))
+	if (!ft_strcmp(tmp->key, key))
 	{
 		*dict = (*dict)->next;
 		mdict_delone(&tmp);
-		return;
+		return ;
 	}
 	while (tmp != NULL)
 	{
@@ -53,7 +54,7 @@ void	mdict_remove_node(t_dict **dict, char *key)
 			hold = tmp->next;
 			tmp->next = tmp->next->next;
 			mdict_delone(&hold);
-			return;
+			return ;
 		}
 		tmp = tmp->next;
 	}
