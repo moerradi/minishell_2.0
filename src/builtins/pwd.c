@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 10:55:52 by moerradi          #+#    #+#             */
-/*   Updated: 2021/12/12 14:44:33 by moerradi         ###   ########.fr       */
+/*   Updated: 2021/12/16 13:07:50 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers/minishell.h"
+#include "../../headers/minishell.h"
 
 int	pwd(char **args, int args_count)
 {
@@ -19,7 +19,7 @@ int	pwd(char **args, int args_count)
 
 	if (args_count == 1)
 	{
-		cwd = getcwd(4096, NULL);
+		cwd = getcwd(NULL, 4096);
 		if (cwd == NULL)
 		{
 			err_tmp = errno;

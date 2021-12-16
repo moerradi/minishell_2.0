@@ -1,5 +1,6 @@
 #include "../headers/minishell.h"
 
+t_dict	*g_env;
 
 void	print_arrow(bool isred)
 {
@@ -58,12 +59,14 @@ void	sig_handler(int sig)
 	}
 }
 
-int		main(int argc, char **argv)
+int		main(int argc, char **argv, char **environ)
 {
 	char	*raw_cmd;
 	t_list	*parsed_cmd;
 
-	//set up environment varibales as a global variable 
+	//set up environment varibales as a global variable
+	g_env = mdict_fill(environ);
+	env();
 	// parse_env(vars);
 
 	// prompt infinite loop

@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 23:20:50 by moerradi          #+#    #+#             */
-/*   Updated: 2021/12/14 23:55:25 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2021/12/16 12:54:51 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static size_t	count_words(char const *str, char c)
 	return (wc);
 }
 
-static char	**ft_garbage(char ***s, size_t idx)
+char	**ft_garbage(char ***s, size_t idx)
 {
 	char	**splitout;
 	size_t	i;

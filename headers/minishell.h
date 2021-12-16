@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:16:44 by moerradi          #+#    #+#             */
-/*   Updated: 2021/12/14 19:15:36 by moerradi         ###   ########.fr       */
+/*   Updated: 2021/12/16 13:03:18 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,7 @@ typedef	struct		s_pipe
 
 
 extern t_dict	*g_env;
+
+int	env();
 
 #endif

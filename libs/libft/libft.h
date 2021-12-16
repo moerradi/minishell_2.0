@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 11:21:56 by moerradi          #+#    #+#             */
-/*   Updated: 2021/12/14 23:58:52 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2021/12/16 12:55:29 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char				*ft_strnstr(const char *haystack,
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);
-static char			**ft_garbage(char ***s, size_t idx);
+char				**ft_garbage(char ***s, size_t idx);
 char				*ft_itoa(int n);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_putchar_fd(char c, int fd);
