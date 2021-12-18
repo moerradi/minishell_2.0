@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:16:44 by moerradi          #+#    #+#             */
-/*   Updated: 2021/12/16 13:35:21 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2021/12/18 16:45:16 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,15 @@
 # include <string.h>
 # include <errno.h>
 
-#define ENV_MODE 13
-#define EXPORT_MODE 37
-
-typedef	struct		s_pipe
+typedef struct s_pipe
 {
 	char	*output_file;
 	char	*input_file;
 	char	*command;
 	char	**args;
-}					t_pipe;
-
-
+}				t_pipe;
 
 extern t_dict	*g_env;
-
-int	env();
+int	env(void);
 
 #endif

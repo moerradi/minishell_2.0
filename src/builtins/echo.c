@@ -6,15 +6,15 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 12:20:30 by kdrissi-          #+#    #+#             */
-/*   Updated: 2021/12/16 12:43:48 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2021/12/18 16:46:48 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int		echo(char **args, int ac)
+int	echo(char **args, int ac)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!ft_strcmp(args[0], "-n"))

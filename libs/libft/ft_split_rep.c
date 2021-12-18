@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 23:20:50 by moerradi          #+#    #+#             */
-/*   Updated: 2021/12/16 12:56:05 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2021/12/18 16:42:47 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	**ft_split_rep(char const *s, char c, int rep)
 {
 	char			**out;
-	int			i;
+	int				i;
 	unsigned int	start;
 	size_t			len;
 
