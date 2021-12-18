@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:16:44 by moerradi          #+#    #+#             */
-/*   Updated: 2021/12/14 19:15:36 by moerradi         ###   ########.fr       */
+/*   Updated: 2021/12/16 19:20:50 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 # include <stdbool.h>
 # include <string.h>
 # include <errno.h>
+
+#define IGNORE_ALL	"$ \t\\'\"|~"
+#define DQUOTE_IGNORE " \t'|~"
 
 typedef	struct		s_pipe
 {
