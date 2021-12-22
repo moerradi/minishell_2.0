@@ -34,8 +34,3 @@ int	pwd(char **args, int args_count)
 		printf("pwd: too many arguments\n");
 	}
 }
-
-int main()
-{
-	pwd(NULL, 1);
-}

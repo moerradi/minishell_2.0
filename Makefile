@@ -10,12 +10,13 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRCS=./src/main.c ./libs/minidict/insert_ops.c ./libs/minidict/search_ops.c ./libs/minidict/delete_ops.c \
-./src/builtins/cd.c ./src/builtins/unset.c ./src/builtins/echo.c ./src/builtins/export.c ./src/builtins/a.out ./src/builtins/pwd.c ./src/builtins/env.c 
+SRCS=./src/main.c ./src/parsing.c ./src/split_pipes.c  ./src/utils.c ./libs/minidict/insert_ops.c ./libs/minidict/search_ops.c ./libs/minidict/delete_ops.c \
+./src/builtins/cd.c ./src/builtins/unset.c ./src/builtins/echo.c ./src/builtins/export.c ./src/builtins/pwd.c ./src/builtins/env.c 
 NAME= minishell
 #FLAGS= -Wall -Werror -Wextra
 LIBS = -lreadline
 LIBFT = ./libs/libft/libft.a
+FLAGS= -fsanitize=address
 
 all: $(NAME)
 

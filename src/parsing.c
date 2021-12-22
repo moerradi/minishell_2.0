@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:05:20 by moerradi          #+#    #+#             */
-/*   Updated: 2021/12/17 03:46:29 by moerradi         ###   ########.fr       */
+/*   Updated: 2021/12/21 00:20:06 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,18 @@ char	*remove_qns(char	*str)
 	i = 0;
 	j = 0;
 	out = malloc(sizeof(char) * (count_qns_less(str) + 1));
-	printf("%i\n", count_qns_less(str));
 	if (!out)
 		return (NULL);
 	while (str[i])
 	{
 		if (str[i] != '\\' && str[i] != '\'' && str[i] != '"')
 		{
-			out[j] = str[i];
+			out[j] = str[i]; 
 			j++;
 		}
 		i++;
 	}
+	out[j] = '\0';
 	return (out);
 }
 
@@ -118,66 +118,6 @@ char	*parse_quotes(char *line)
 	return (final);
 }
 
-// bool	parse_errors(char *line)
-// {
-// 	int		i;
-// 	bool	squote;
-// 	bool	dquote;
-// 	bool	escape;
-// 	bool	special;
-
-
-// 	squote = false;
-// 	dquote = false;
-// 	escape = false;
-// 	i = 0;
-// 	while (line[i])
-// 	{
-// 		if (escape)
-// 			escape = false;
-// 		else if (line[i] == '\'' && !dquote)
-// 			squote = !squote;
-// 		else if (line[i] == '"' && !squote)
-// 			dquote = !dquote;
-// 		else if (is_bash_special(line[i]))
-// 			special = true;
-// 		else if (line[i] == '\\')
-// 			escape = true;
-// 		i++;
-// 	}
-	
-// 	if (squote || dquote || escape)
-// 		printf("parse error");
-// }
-
-// bool	istoken(char c)
-// {
-	
-// }
-
-// char	*parse(char *line)
-// {
-// 	int i;
-// 	char	*tr_line;
-
-// 	i = 0;
-// 	//tr_line = ft_strtrim(line, " \t");
-// 	tr_line = 
-// 	return tr_line;
-// }
-
-// int	 main(int argc, char ** argv)
-// {
-// 	char	*tok;
-
-// 	tok = strtok(argv[1], "| ");
-// 	printf("%s\n", tok);
-// 	while ((tok = strtok(NULL, "| '\"")))
-// 		printf("%s\n", tok);
-// 	return (0);
-// }
-
-
 
 
 // we split by pipes but if a  trimmed line starts or ends with a pipe or has consecutive pipes then its a parse error;
@@ -189,8 +129,19 @@ char	*parse_quotes(char *line)
 
 
 
-int main()
+void	fix_tokens(char **str)
 {
-	char *test = readline("test > ");
-	printf("%s\n", parse_quotes(test) );
+	int i;
+	char *tmp;
+	
+	tmp = *str;
+	i = 0;
+	while (tmp[i])
+	{
+		if (tmp[i] < 0)
+		{
+			tmp[i] = tmp[i] * (-1);
+		}
+		i++;
+	}
 }

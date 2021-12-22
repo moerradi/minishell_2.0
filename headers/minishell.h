@@ -40,6 +40,14 @@ typedef	struct		s_pipe
 }				t_pipe;
 
 extern t_dict	*g_env;
-int	env(void);
+
+int		env(void);
+void	fix_tokens(char **str);
+char	*parse_quotes(char *line);
+char	**split_pipes(char *s);
+
+//debug utils
+void	print_pipes(char **pipes);
+
 
 #endif
