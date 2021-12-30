@@ -17,10 +17,8 @@ int	space_len(char *str, char *set)
 {
 	int	i;
 	int	len;
-	int	j;
 
 	i = 0;
-	j = 0;
 	len = 0;
 	while (str[i] != '\0')
 	{
@@ -37,14 +35,12 @@ int	space_len(char *str, char *set)
 	return (len);
 }
 
-char	*spacify(char *str, char *set)
+char	*spacify(char *str, char *set, int len)
 {
 	char	*out;
 	int		i;
 	int		j;
-	int		len;
 
-	len = space_len(str, set);
 	j = 0;
 	i = 0;
 	out = malloc(sizeof(char) * len);
@@ -54,19 +50,17 @@ char	*spacify(char *str, char *set)
 		{
 			out[i++] = ' ';
 			out[i++] = str[j++];
-			out[i++] = str[j];
-			out[i] = ' ';
+			out[i++] = str[j++];
+			out[i++] = ' ';
 		}
 		else if (ft_strchr(set, str[j]))
 		{
 			out[i++] = ' ';
-			out[i++] = str[j];
-			out[i] = ' ';
+			out[i++] = str[j++];
+			out[i++] = ' ';
 		}
 		else
-			out[i] = str[j];
-		i++;
-		j++;
+			out[i++] = str[j++];
 	}
 	out[i] = '\0';
 	return (out);
@@ -74,28 +68,13 @@ char	*spacify(char *str, char *set)
 
 char	**ft_strtok(char *str, char *set)
 {
-	char	**split;
 	char	*spaced;
 	char	**out;
+	int		len;
 
-	spaced = spacify(str, set);
-	split = ft_split(set, ' ');
+	len = space_len(str, set);
+	spaced = spacify(str, set, len);
 	out = ft_split (spaced, ' ');
 	free(spaced);
-	free(split);
 	return (out);
 }
-
-// int		main(int ac, char **av)
-// {
-// 	int i = 0;
-// 	char *out;
-// 	char **toks;
-
-// 	toks =ft_strtok(av[1],"<>;.");
-// 	while (*toks)
-// 	{
-// 		printf("%s\n", *toks++);
-// 		// toks++;
-// 	}
-// }

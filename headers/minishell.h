@@ -28,26 +28,41 @@
 # include <string.h>
 # include <errno.h>
 
-#define IGNORE_ALL	"$ \t\\'\"|~"
-#define DQUOTE_IGNORE " \t'|~"
+#define IGNORE_ALL	"$ \t\\'\"|~<>"
+#define DQUOTE_IGNORE " \t'|~<>"
+#define	EQUOTE_IGNORE "\\\"$"
+
+#define	R_CREATE 1
+#define R_APPEND 2
+#define	R_READ 3
+#define	R_STREAM 4
+
+typedef	enum e_token {nontoken, si_redir, so_redir, di_redir, do_redir, dollar }t_token;
+
+typedef struct	s_redir
+{
+	char	*file;
+	t_token	mode;
+}				t_redir;
 
 typedef	struct		s_pipe
 {
-	char	*output_file;
-	char	*input_file;
+	t_list	*output_files;
+	t_list	*input_files;
 	char	*command;
-	char	**args;
+	t_list	*args;
 }				t_pipe;
 
 extern t_dict	*g_env;
 
 int		env(void);
-void	fix_tokens(char **str);
+void	fix_tokens(char *str);
 char	*parse_quotes(char *line);
 char	**split_pipes(char *s);
+char	*expand(char *key);
 
 //debug utils
-void	print_pipes(char **pipes);
+void	deb_print_strarr(char **pipes);
 
 
 #endif

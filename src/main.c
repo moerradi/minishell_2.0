@@ -75,7 +75,7 @@ int		main(int argc, char **argv, char **environ)
 {
 	char	*raw_cmd;
 	char	*tmp;
-	t_list	*parsed_cmd;
+	t_pipe	*parsed_cmd;
 	char	**pipes;
 
 	//set up environment varibales as a global variable
@@ -98,14 +98,13 @@ int		main(int argc, char **argv, char **environ)
 		add_history(tmp);
 		// parse command
 		pipes = parse_cmd(raw_cmd);
+		deb_print_strarr(pipes);
 		if (!pipes)
 		{
 			printf("Syntax error\n");
 			continue;
 		}
-		print_pipes(pipes);
 		free(raw_cmd);
-		raw_cmd = NULL;
 		run_cmd(parsed_cmd);
 		// post_cmd_clenup(raw_cmd, parsed_cmd);
 	}
