@@ -63,13 +63,15 @@ char	*parse_quotes(char *line);
 char	**split_pipes(char *s);
 t_token	get_token_type(char	*token);
 bool	validate_redirs(char **tokens);
+char	*removechars(char *str, const char *charset);
 t_pipe	*parse_tokens(char **tokens);
 char	*expand(char *key);
 void	free_pipe(void	*pipe);
 void	free_strs(char **strs);
+t_list	*parse(char *cmd);
 
 //debug utils
-void	deb_print_strarr(char **pipes);
-
+void	deb_print_strarr(char **strs);
+void	deb_print_pipe(void *pipe);
 
 #endif

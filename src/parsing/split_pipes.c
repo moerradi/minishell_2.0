@@ -6,11 +6,11 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 13:27:35 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/01 01:08:51 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/01 17:11:30 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
 
 bool	is_all_space(char *str)
 {

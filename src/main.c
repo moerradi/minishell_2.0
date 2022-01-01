@@ -15,11 +15,6 @@ int		get_last_exit_code()
 	return (0);
 }
 
-
-
-void	run_cmd(t_list *cmd)
-{}
-
 char	*prompt(void)
 {
 	char	*cwd;
@@ -69,7 +64,13 @@ int		main(int argc, char **argv, char **environ)
 		if (!(*raw_line))
 			continue;
 		add_history(tmp);
-		pipes = parse_cmd(raw_line);
+		pipes = parse(raw_line);
+		if (!pipes)
+		{
+			printf("Parse error\n");
+			continue;
+		}
+		ft_lstiter(pipes, &deb_print_pipe);
 		free(raw_line);
 		run_cmd(pipes);
 		ft_lstclear(&pipes, &free_pipe);
