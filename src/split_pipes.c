@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 13:27:35 by moerradi          #+#    #+#             */
-/*   Updated: 2021/12/21 03:54:22 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/01 01:08:51 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static size_t	count_pipes(char *str)
 
 	t = 1;
 	wc = 0;
+	if (!str)
+		return (0);
 	while (*str)
 	{
 		if (*str == '|')
@@ -67,8 +69,6 @@ char	**split_pipes(char *s)
 	if (pc == 0)
 		return (NULL);
 	out = malloc(sizeof(char *) * (pc + 1));
-	if (s == NULL || !out)
-		return (NULL);
 	while (i < pc)
 	{
 		len = 0;

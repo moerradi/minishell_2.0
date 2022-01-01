@@ -10,32 +10,12 @@ void	print_arrow(bool isred)
 		printf("\033[0;32m➜\033[0m  ");
 }
 
-// char	*ms_get_env(char *var)
-// {
-
-// }
 int		get_last_exit_code()
 {
 	return (0);
-	// return (ft_atoi(ms_get_env("?")));
 }
 
 
-
-char	**parse_cmd(char *cmd)
-{
-	char **out;
-	char *tmp;
-
-	out = NULL;
-	tmp = parse_quotes(cmd);
-	if (tmp)
-	{
-		out = split_pipes(tmp);
-		free(tmp);
-	}
-	return (out);
-}
 
 void	run_cmd(t_list *cmd)
 {}
@@ -44,15 +24,15 @@ char	*prompt(void)
 {
 	char	*cwd;
 	char	*prompt_msg;
-	char	*raw_cmd;
+	char	*out;
 
 	cwd = getcwd(NULL, 4096);
 	prompt_msg = ft_strrchr(cwd, '/') + 1;
 	prompt_msg = ft_strjoin(prompt_msg, " > ");
-	raw_cmd = readline(prompt_msg);
+	out = readline(prompt_msg);
 	free(cwd);
 	free(prompt_msg);
-	return (raw_cmd);
+	return (out);
 }
 
 void	sig_handler(int sig)
@@ -73,39 +53,25 @@ void	sig_handler(int sig)
 
 int		main(int argc, char **argv, char **environ)
 {
-	char	*raw_cmd;
+	char	*raw_line;
 	char	*tmp;
-	t_pipe	*parsed_cmd;
-	char	**pipes;
+	t_list	*pipes;
 
-	//set up environment varibales as a global variable
 	g_env = mdict_fill(environ);
-	// parse_env(vars);
-
-	// prompt infinite loop
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
 	while (1)
 	{
-		// get command
 		tmp = prompt();
-		raw_cmd = ft_strtrim(tmp, " \t");
-		// // store it in hostory
+		raw_line = ft_strtrim(tmp, " \t");
 		if (!tmp)
 			exit(0);
-		if (!(*raw_cmd))
+		if (!(*raw_line))
 			continue;
 		add_history(tmp);
-		// parse command
-		pipes = parse_cmd(raw_cmd);
-		deb_print_strarr(pipes);
-		if (!pipes)
-		{
-			printf("Syntax error\n");
-			continue;
-		}
-		free(raw_cmd);
-		run_cmd(parsed_cmd);
-		// post_cmd_clenup(raw_cmd, parsed_cmd);
+		pipes = parse_cmd(raw_line);
+		free(raw_line);
+		run_cmd(pipes);
+		ft_lstclear(&pipes, &free_pipe);
 	}
 }

@@ -56,10 +56,17 @@ typedef	struct		s_pipe
 extern t_dict	*g_env;
 
 int		env(void);
-void	fix_tokens(char *str);
+void	fix_token(char *str);
+t_redir	*redir_new(char *path, t_token mode);
+t_pipe	*init_pipe();
 char	*parse_quotes(char *line);
 char	**split_pipes(char *s);
+t_token	get_token_type(char	*token);
+bool	validate_redirs(char **tokens);
+t_pipe	*parse_tokens(char **tokens);
 char	*expand(char *key);
+void	free_pipe(void	*pipe);
+void	free_strs(char **strs);
 
 //debug utils
 void	deb_print_strarr(char **pipes);
