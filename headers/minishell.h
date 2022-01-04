@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:16:44 by moerradi          #+#    #+#             */
-/*   Updated: 2021/12/18 16:45:16 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/03 21:36:55 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <stdbool.h>
 # include <string.h>
 # include <errno.h>
+# include <fcntl.h>
 
 #define IGNORE_ALL	"$ \t\\'\"|~<>"
 #define DQUOTE_IGNORE " \t'|~<>"
@@ -50,7 +51,8 @@ typedef	struct		s_pipe
 	t_list	*output_files;
 	t_list	*input_files;
 	char	*command;
-	t_list	*args;
+	char	**args;
+	int		ac;
 }				t_pipe;
 
 extern t_dict	*g_env;
@@ -67,6 +69,7 @@ t_pipe	*parse_tokens(char **tokens);
 char	*expand(char *key);
 void	free_pipe(void	*pipe);
 void	free_strs(char **strs);
+char	**mini_split(char *av, char c);
 
 //debug utils
 void	deb_print_strarr(char **pipes);

@@ -16,10 +16,6 @@ int		get_last_exit_code()
 }
 
 
-
-void	run_cmd(t_list *cmd)
-{}
-
 char	*prompt(void)
 {
 	char	*cwd;

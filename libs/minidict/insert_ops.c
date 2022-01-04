@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 20:32:55 by kdrissi-          #+#    #+#             */
-/*   Updated: 2021/12/16 14:13:37 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/03 21:51:49 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ t_dict	*mdict_new(char *key, char *value)
 	if (!new)
 		return (NULL);
 	new->key = ft_strdup(key);
-	new->value = ft_strdup(value);
+	if (!value)
+		new->value = NULL;
+	else
+		new->value = ft_strdup(value);
 	new->next = NULL;
 	return (new);
 }
