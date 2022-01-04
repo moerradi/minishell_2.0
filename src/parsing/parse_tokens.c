@@ -6,13 +6,13 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 01:13:34 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/01 01:18:44 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/01 19:42:32 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
 
-t_token get_token_type(char	*token)
+t_token	get_token_type(char	*token)
 {
 	if (!ft_strcmp(token, ">"))
 		return (so_redir);
@@ -28,7 +28,7 @@ t_token get_token_type(char	*token)
 		return (nontoken);
 }
 
-static void	parsing_helper(t_pipe *pipe, const char *str)
+static void	parsing_helper(t_pipe *pipe, char *str)
 {
 	t_list	*node;
 
@@ -62,6 +62,7 @@ t_pipe	*parse_tokens(char **tokens)
 	out = init_pipe();
 	while (tokens[i])
 	{
+		fix_token(tokens[i]);
 		t = get_token_type(tokens[i]);
 		if (t == si_redir || t == di_redir || t == so_redir || t == do_redir)
 			handle_redir(out, t, tokens[++i]);

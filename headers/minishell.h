@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:16:44 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/03 21:36:55 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/04 05:36:41 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ char	*parse_quotes(char *line);
 char	**split_pipes(char *s);
 t_token	get_token_type(char	*token);
 bool	validate_redirs(char **tokens);
+char	*removechars(char *str, const char *charset);
 t_pipe	*parse_tokens(char **tokens);
 char	*expand(char *key);
 void	free_pipe(void	*pipe);
@@ -72,7 +73,7 @@ void	free_strs(char **strs);
 char	**mini_split(char *av, char c);
 
 //debug utils
-void	deb_print_strarr(char **pipes);
-
+void	deb_print_strarr(char **strs);
+void	deb_print_pipe(void *pipe);
 
 #endif

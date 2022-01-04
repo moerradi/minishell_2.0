@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 19:47:16 by moerradi          #+#    #+#             */
-/*   Updated: 2021/12/30 19:47:55 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/01 19:32:08 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,28 @@ void	ft_putredir(void *redir)
 	printf("%s-%i ", tmp->file, tmp->mode);
 }
 
-void	deb_print_pipe(t_pipe *pipe)
+void	deb_print_pipe(void *pipe)
 {
-	printf("command : %s\n", pipe->command);
+	t_pipe	*tmp;
+
+	tmp = (t_pipe *) pipe;
+	printf("command : %s\n", tmp->command);
 	printf("arguments: ");
-	ft_lstiter(pipe->args, &ft_putstr);
+	ft_lstiter(tmp->args, &ft_putstr);
 	printf("\n");
 	printf("input files: ");
-	ft_lstiter(pipe->input_files, &ft_putredir);
+	ft_lstiter(tmp->input_files, &ft_putredir);
 	printf("\n");
 	printf("output files: ");
-	ft_lstiter(pipe->output_files, &ft_putredir);
+	ft_lstiter(tmp->output_files, &ft_putredir);
 	printf("\n");
 }
 
-void	deb_print_strarr(char **pipes)
+void	deb_print_strarr(char **strs)
 {
 	int i;
 
 	i = 0;
-	while (pipes[i])
-		printf("%s\n", pipes[i++]);
+	while (strs[i])
+		printf("%s\n", strs[i++]);
 }
