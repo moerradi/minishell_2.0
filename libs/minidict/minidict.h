@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 14:57:38 by moerradi          #+#    #+#             */
-/*   Updated: 2021/12/16 14:15:56 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/03 19:34:27 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,5 @@ char	*mdict_key_search(t_dict *dict, char *key);
 void	mdict_remove_node(t_dict **dict, char *key);
 t_dict	*mdict_node_search(t_dict *dict, char *key);
 void	mdict_delone(t_dict **dict);
+void	mdict_change_value(t_dict **dict, char *key, char *value);
 #endif

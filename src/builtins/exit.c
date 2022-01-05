@@ -44,6 +44,10 @@ int		bash_exit(char **args, int ac)
 		else if (ac == 1)
 			exit(ft_atoi(args[0]));
 		else
+		{
 			ft_putstr_fd("bash: exit: too many arguments\n", 2);
+			return (2);
+		}
 	}
+	return (0);
 }
