@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 01:10:02 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/01 19:40:28 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/02 03:34:11 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ t_pipe	*init_pipe(void)
 
 	out = (t_pipe *)malloc(sizeof(t_pipe));
 	out->args = NULL;
-	out->command = NULL;
+	out->cmd = NULL;
 	out->input_files = NULL;
 	out->output_files = NULL;
+	out->ac = 0;                                                                                                                                                                                                                                                                                            
 	return (out);
 }

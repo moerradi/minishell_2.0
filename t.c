@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   t.c                                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 12:20:30 by kdrissi-          #+#    #+#             */
-/*   Updated: 2021/12/18 16:46:48 by kdrissi-         ###   ########.fr       */
+/*   Created: 2022/01/04 19:20:59 by moerradi          #+#    #+#             */
+/*   Updated: 2022/01/04 21:24:30 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/minishell.h"
+// extern char	**environ;
+#include <stdlib.h>
+#include <stdio.h>
 
-int	echo(char **args, int ac)
+void	test();
+int	main(void)
 {
-	int	i;
-
-	i = 0;
-	while (!ft_strcmp(args[0], "-n"))
-		i++;
-	while (i < ac - 1)
-		printf("%s ", args[i++]);
-	printf("%s", args[i]);
-	if (ft_strcmp(args[0], "-n"))
-		printf("\n");
+	test();
 }

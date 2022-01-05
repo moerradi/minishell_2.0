@@ -31,7 +31,6 @@
 #define IGNORE_ALL	"$ \t\\'\"|~<>"
 #define DQUOTE_IGNORE " \t'|~<>"
 #define	EQUOTE_IGNORE "\\\"$"
-
 #define	R_CREATE 1
 #define R_APPEND 2
 #define	R_READ 3
@@ -49,13 +48,12 @@ typedef	struct		s_pipe
 {
 	t_list	*output_files;
 	t_list	*input_files;
-	char	*command;
-	t_list	*args;
+	char	*cmd;
+	int		ac;
+	char	**args;
 }				t_pipe;
 
-extern t_dict	*g_env;
 
-int		env(void);
 void	fix_token(char *str);
 t_redir	*redir_new(char *path, t_token mode);
 t_pipe	*init_pipe();
@@ -68,10 +66,16 @@ t_pipe	*parse_tokens(char **tokens);
 char	*expand(char *key);
 void	free_pipe(void	*pipe);
 void	free_strs(char **strs);
+void	free_str(void *str);
+char	**lst_to_arr(t_list	*lst, size_t size);
 t_list	*parse(char *cmd);
 
+int		env(void);
+
 //debug utils
+// #ifdef DEBUG
 void	deb_print_strarr(char **strs);
 void	deb_print_pipe(void *pipe);
+// #endif
 
 #endif
