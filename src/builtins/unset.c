@@ -6,29 +6,41 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 13:09:08 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/03 18:23:43 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/04 21:02:52 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int     unset(char **args, int ac)
-{
-    int i;
+extern char	**environ;
 
-    i = 0;
-    while (args[i])
-        mdict_remove_node(g_env, args[i++]);
+int     unset_one(char *arg)
+{
+	int	len;
+	char **ptr;
+	int	i;
+
+	len = ft_strlen(arg);
+	i = 0;
+	while (environ[i])
+	{
+		if (!ft_strncmp(environ[i],arg, len) && environ[i][len] == '=')
+		{
+			ptr = &environ[i];
+			while (*ptr)
+			{
+				ptr[0] = ptr[1];
+				ptr++;
+			}
+		}
+		i++;
+	}
 }
-
-int     unset(t_list    *args)
+void	unset(char **args)
 {
-    t_list *tmp;
+	int	i;
 
-    tmp = args;
-    while (tmp)
-    {
-        mdict_remove_node(g_env, (char *)tmp->content);
-        tmp = tmp->next;
-    }
+	i = 0;
+	while (args[i])
+		unset_one(args[i++]);
 }

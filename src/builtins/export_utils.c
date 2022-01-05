@@ -6,11 +6,13 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 05:30:10 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/04 05:32:07 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/04 22:16:29 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+extern char	**environ;
 
 int		export_error(char *av) // dup and use printf;
 {
@@ -21,12 +23,14 @@ int		export_error(char *av) // dup and use printf;
 
 void	print_export(int fd) // same here
 {
-	t_dict	*dict;
+	int i;
+	char **split;
 
-	dict = g_env;
-	while (dict != NULL)
+	i = 0;
+	
+	while (environ[i] != NULL)
 	{
-		if (dict->value == NULL)
+		if (ft_strchr())
 		{
 			ft_putstr_fd(dict->key, fd);
 			ft_putstr_fd("\n",fd);
@@ -38,6 +42,28 @@ void	print_export(int fd) // same here
 			ft_putstr_fd(dict->value, fd);
 			ft_putstr_fd("\"\n",fd);
 		}
-		dict = dict->next;
+		i++;
 	}
+}
+
+int ft_putenv(const char *string)
+{
+	char	**ep;
+	size_t	namelen;
+	char	*name;
+	char	*np;
+
+    name = ft_strndup(string, ft_strchr(string, '=') - string);
+    namelen = ft_strlen(name);
+    ep = environ;
+	while (ep != NULL)
+	{
+		if (!ft_strncmp (ep, name, namelen) && (ep)[namelen] == '=')
+			break;
+		++ep;
+	}
+	free(name);
+	np = (char *) string;
+	*ep = np;
+	return 0;
 }

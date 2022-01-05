@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:16:44 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/04 05:36:41 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/04 17:20:30 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ char	*expand(char *key);
 void	free_pipe(void	*pipe);
 void	free_strs(char **strs);
 char	**mini_split(char *av, char c);
-
 //debug utils
 void	deb_print_strarr(char **strs);
 void	deb_print_pipe(void *pipe);
