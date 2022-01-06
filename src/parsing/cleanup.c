@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 19:22:11 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/01 18:02:07 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/06 07:51:39 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-static void	free_redir(void *redir)
+void	free_redir(void *redir)
 {
 	t_redir	*tmp;
 

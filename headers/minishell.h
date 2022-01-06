@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:16:44 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/04 17:20:30 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/06 19:47:57 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,11 @@ char	**mini_split(char *av, char c);
 //debug utils
 void	deb_print_strarr(char **strs);
 void	deb_print_pipe(void *pipe);
+// execution
+void	ft_execvp(char *cmd, char **args, char **env);
+void	free_redir(void *redir);
+int		out_files(t_list *files);
+int		handle_d_i(t_redir *tmp);
+int		in_files(t_list *files);
 
 #endif

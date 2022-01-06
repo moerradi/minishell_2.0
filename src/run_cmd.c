@@ -6,40 +6,13 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 23:30:23 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/05 15:01:41 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/06 20:21:08 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-t_dict	*g_env;
-
-int		handle_files(t_list	*files)
-{
-	int	i;
-	int	*fd;
-	int	err_tmp;
-	i = ft_lstsize(files);
-	fd = malloc(sizeof(int) * i);
-	while (files != NULL)
-	{
-		if (((t_redir *)(files->content))->mode == do_redir)
-			fd[i] = open(files->content, O_WRONLY | O_APPEND, 0777);
-		else if (((t_redir *)(files->content))->mode == do_redir)
-			fd[i] = open(files->content, O_WRONLY | O_CREAT, 0777);
-		else if (((t_redir *)(files->content))->mode == do_redir)
-			fd[i] = open(files->content, O_WRONLY | O_CREAT, 0777);
-		close(fd[i]);
-		if (fd[i] == -1)
-		{
-			err_tmp = errno;
-			ft_putstr_fd( strerror(err_tmp), 2);
-		}
-		files = files->next;
-		i++;
-	}
-	return (fd[i]);
-}
+extern char **environ;
 
 int		is_builtin(t_pipe *cmd)
 {
@@ -61,77 +34,156 @@ int		is_builtin(t_pipe *cmd)
 		return (127);
 }
 
-void	ft_execvp(char *cmd, char **args, char **env)
-{
-	char		**all_paths;
-	char		*str;
-	char		*path;
-	char		*tmp;
-	int			i;
+// void	ft_execvp(char *cmd, char **args, char **env)
+// {
+// 	char		**all_paths;
+// 	char		*str;
+// 	char		*path;
+// 	char		*tmp;
+// 	int			i;
 
-	str = mdict_key_search(g_env, "PATH");
-	all_paths = ft_split(str, ':');
-	i = 0;
-	while (all_paths[i] != NULL)
-	{
-		tmp = ft_strjoin("/", cmd);
-		path = ft_strjoin(all_paths[i], tmp);
-		free(tmp);
-		execve(path, args, env);
-		free(path);
-		i++;
-	}
-	free_strs(all_paths);
-	i = errno;
-	ft_putstr_fd(strerror(i), 2);
-}
+// 	str = getenv("PATH");
+// 	all_paths = ft_split(str, ':');
+// 	i = 0;
+// 	while (all_paths[i] != NULL)
+// 	{
+// 		tmp = ft_strjoin("/", cmd);
+// 		path = ft_strjoin(all_paths[i], tmp);
+// 		free(tmp);
+// 		execve(path, args, env);
+// 		free(path);
+// 		i++;
+// 	}
+// 	free_strs(all_paths);
+// 	i = errno;
+// 	ft_putstr_fd(strerror(i), 2);
+// }
 
-void	single_cmd(t_list *cmd)
-{
-	// int	fd[2];
-	int	pid1;
-	int	out;
-	int	in;
-	char *path;
+// void	single_cmd(t_list *cmd)
+// {
+// 	// int	fd[2];
+// 	int	pid1;
+// 	int	out;
+// 	int	in;
+// 	char *path;
 
-	// if (pipe(fd) == -1)
-	// 	return;
-	pid1 = fork(); //check fork failing
-	path = get_path();
-	if (pid1 == 0)
-	{
-		out = out_files(((t_pipe *)(cmd->content))->output_files);
-		in = in_files(((t_pipe *)(cmd->content))->input_files);
-		dup2(out, STDOUT_FILENO);
-		if(!is_builtin((t_pipe *)cmd->content))
-			ft_execvp(((t_pipe *)(cmd->content))->command,((t_pipe *)(cmd->content))->args, g_env);
-		//close files;
-	}
-	//waitpid;
-	//close files;
-}
+// 	// if (pipe(fd) == -1)
+// 	// 	return;
+// 	pid1 = fork(); //check fork failing
+// 	path = get_path();
+// 	if (pid1 == 0)
+// 	{
+// 		out = out_files(((t_pipe *)(cmd->content))->output_files);
+// 		in = in_files(((t_pipe *)(cmd->content))->input_files);
+// 		dup2(out, STDOUT_FILENO);
+// 		if(!is_builtin((t_pipe *)cmd->content))
+// 			ft_execvp(((t_pipe *)(cmd->content))->command,((t_pipe *)(cmd->content))->args, g_env);
+// 		//close files;
+// 	}
+// 	//waitpid;
+// 	//close files;
+// }
 
-void	set_io(int *in, int *out, int fd[2])
-{
-	
-}
+
+
+// void redirect_io(int in, int out)
+// {
+//     if (in != 0)
+//     {
+//         dup2(in, 0);
+//     }
+//     if (out != 1)
+//     {
+//         dup2(out, 1);
+//         close(in);
+//     }
+// }
+
+// int execute_command(t_pipe *cmd, int in, int out)
+// {
+// 	int pid;
+// 	int status = 127;
+
+// 	pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		redirect(in, out);
+// 		status = is_builtin(cmd);
+// 		if (status == 127)
+// 		{
+// 			if(execve(cmd->command, cmd->args, environ) == -1)
+// 			{
+// 				ft_putstr_fd("error: cannot execute ", 2);
+// 				ft_putstr_fd(cmd->command, 2);
+// 				ft_putstr_fd("\n", 2);
+// 				exit(0);
+// 			}
+// 		}
+// 		exit(0);
+// 	}
+// 	else
+// 		pid = waitpid(pid, &status, WUNTRACED);
+// 	return (status);
+// }
+
+
 
 void	run_cmd(t_list *cmd, int *exit_code)
 {
 	int	fd[2];
 	int	in;
 	int out;
+	int status;
+	int first;
 
+	first = true;
 	while (cmd!= NULL)
 	{
-		set_io(&in, &out, fd);
-		*exit_code = is_builtin();
-		if(*exit_code == 127)
-			execute_cmd();
+		get_i_o((t_pipe *)cmd->content,&in, &out, fd);
+		if (first && in == fd[0])
+			in = 0;
+		if (!cmd->next && out == fd[1])
+			out = 1;
+		status = execute_cmd((t_pipe *)cmd->content, in , out);
 		if (out != 1)
-            close(out);  
-        if (in != 0)
-            close(in);
+			close(out);  
+		if (in != 0)
+			close(in);
+		first = false;
 		cmd = cmd->next;
 	}
 }
+
+// int		main(int ac, char **av)
+// {
+// 	t_list *files;
+// 	t_list *file1;
+// 	t_list *file2;
+// 	t_redir *f;
+// 	t_redir *t;
+// 	t_redir *k;
+// 	char *line;
+// 	int fd = 1;
+
+
+// 	f = redir_new(av[1], si_redir);
+// 	t = redir_new(av[2], si_redir);
+// 	k = redir_new(av[3], di_redir);
+// 	files = ft_lstnew(f);
+// 	file1 = ft_lstnew(t);
+// 	file2 = ft_lstnew(k);
+// 	ft_lstadd_back(&files, file1);
+// 	ft_lstadd_back(&files, file2);
+// 	fd = in_files(files);
+	
+// 	while (get_next_line(fd, &line))
+// 	{
+// 		printf("%s\n", line);
+// 		free(line);
+// 	}
+// 	printf("%s\n", line);
+// 	free(line);
+// 	printf("%d\n", fd);
+// 	ft_lstclear(&files, &free_redir);
+// 	close(fd);
+// }

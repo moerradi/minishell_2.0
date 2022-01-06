@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 10:55:52 by moerradi          #+#    #+#             */
-/*   Updated: 2021/12/16 13:07:50 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/05 17:54:01 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,13 @@ int	pwd(char **args, int args_count)
 		if (cwd == NULL)
 		{
 			err_tmp = errno;
-			printf("pwd: %s\n", strerror(err_tmp));
+			ft_putstr_fd("pwd: ", 2);
+			ft_putstr_fd(strerror(err_tmp), 2);
+			ft_putstr_fd("\n", 2);
 		}
 		printf("%s\n", cwd);
 		free(cwd);
 	}
 	else
-	{
-		// replace with with printing to stderror
-		printf("pwd: too many arguments\n");
-	}
+		ft_putstr_fd("pwd: too many arguments\n", 2);
 }

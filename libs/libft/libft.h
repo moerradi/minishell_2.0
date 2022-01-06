@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 11:21:56 by moerradi          #+#    #+#             */
-/*   Updated: 2021/12/16 12:55:29 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/05 18:28:14 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 char				**ft_split_rep(char const *s, char c, int rep);
 void				free_arr(char ***arr);
 int					count_len(char const *s, int start, char c);
-
+int    				ft_putenv(const char *string);
 #endif
