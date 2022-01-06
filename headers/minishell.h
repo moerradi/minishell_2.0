@@ -67,7 +67,11 @@ t_pipe	*parse_tokens(char **tokens);
 char	*expand(char *key);
 void	free_pipe(void	*pipe);
 void	free_strs(char **strs);
+void	free_str(void *str);
 char	**mini_split(char *av, char c);
+char	*expand_str(char *str);
+char	**lst_to_arr(t_list	*lst, size_t size);
+char	**extok(char *str, const char *set);
 t_list	*parse(char *cmd);
 //debug utils
 // #ifdef DEBUG

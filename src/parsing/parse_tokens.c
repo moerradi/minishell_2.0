@@ -6,14 +6,14 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 01:13:34 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/02 21:12:37 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/05 20:05:26 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
 t_token	get_token_type(char	*token)
-{         
+{
 	if (!ft_strcmp(token, ">"))
 		return (so_redir);
 	else if (!ft_strcmp(token, "<"))
@@ -32,6 +32,7 @@ static void	parsing_helper(t_pipe *pipe, char *str, t_list **tmp)
 {
 	t_list	*node;
 
+	fix_token(str);
 	if (!pipe->cmd)
 		pipe->cmd = ft_strdup(str);
 	else
@@ -45,7 +46,8 @@ static void	parsing_helper(t_pipe *pipe, char *str, t_list **tmp)
 static void	*handle_redir(t_pipe *pipe, t_token t, char *str)
 {
 	t_list	*node;
-
+	
+	fix_token(str);
 	node = ft_lstnew(redir_new(str, t));
 	if (t == si_redir || t == di_redir)
 		ft_lstadd_back(&pipe->input_files, node);
@@ -53,7 +55,7 @@ static void	*handle_redir(t_pipe *pipe, t_token t, char *str)
 		ft_lstadd_back(&pipe->output_files, node);
 }
 
-t_pipe	*dparse_tokens(char **tokens)
+t_pipe	*parse_tokens(char **tokens)
 {
 	int		i;
 	t_token	t;
@@ -65,7 +67,6 @@ t_pipe	*dparse_tokens(char **tokens)
 	out = init_pipe();
 	while (tokens[i])
 	{
-		fix_token(tokens[i]);
 		t = get_token_type(tokens[i]);
 		if (t == si_redir || t == di_redir || t == so_redir || t == do_redir)
 			handle_redir(out, t, tokens[++i]);
@@ -77,7 +78,7 @@ t_pipe	*dparse_tokens(char **tokens)
 		// 		parsing_helper(out, expand(tokens[++i]), &tmp);
 		// }
 		else
-			parsing_helper(out, expand(tokens[i]), &tmp);
+			parsing_helper(out, expand_str(tokens[i]), &tmp);
 		i++;
 	}
 	out->args = lst_to_arr(tmp, out->ac);

@@ -56,7 +56,7 @@ char				*ft_strnstr(const char *haystack,
 						const char *needle, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);
-char				**ft_strtok(char *str, char *set);
+char				**ft_strtok(char *str, const char *set);
 char				**ft_split(char const *s, char c);
 char				**ft_garbage(char ***s, size_t idx);
 char				*ft_itoa(int n);
