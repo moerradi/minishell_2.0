@@ -12,24 +12,38 @@
 
 #include "../../headers/minishell.h"
 
+int		cd_err(char *arg)
+{
+	ft_putstr_fd("bash: cd: ", 2);
+	perror(arg);
+	return (1);
+}
+
+
 int		cd(char **args, int args_count)
 {
-	int	err_tmp;
+	char *home;
 
-	//if (args_count == 0)
-		// cwd $HOME
-	/*else*/ if (args_count == 1)
+	if (args_count == 0)
+	{
+		home = expand("HOME");
+		if (!home || !(*home))
+		{
+			ft_putstr_fd("bash: cd: HOME not set\n", 2);
+			return (1);
+		}
+		if (chdir(home) == -1)
+			return (cd_err(home));
+	}
+	else if (args_count == 1)
 	{
 		if(chdir(args[0]) == -1)
-		{
-			err_tmp = errno;
-			printf("cd: %s: %s\n", args[0], strerror(err_tmp));
-		}
-		return (0);
+			return (cd_err(args[0]));
 	}
 	else
 	{
-		printf("cd: too many arguments\n");
-		return (0);
+		ft_putstr_fd("cd: too many arguments\n", 2);
+		return (1);
 	}
+	return (0);
 }

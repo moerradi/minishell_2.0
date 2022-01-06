@@ -11,9 +11,8 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
-int	space_len(char *str, char *set)
+static int	space_len(char *str, const char *set)
 {
 	int	i;
 	int	len;
@@ -35,7 +34,7 @@ int	space_len(char *str, char *set)
 	return (len);
 }
 
-char	*spacify(char *str, char *set, int len)
+static char	*spacify(char *str, const char *set, int len)
 {
 	char	*out;
 	int		i;
@@ -66,7 +65,7 @@ char	*spacify(char *str, char *set, int len)
 	return (out);
 }
 
-char	**ft_strtok(char *str, char *set)
+char	**ft_strtok(char *str, const char *set)
 {
 	char	*spaced;
 	char	**out;
@@ -74,7 +73,7 @@ char	**ft_strtok(char *str, char *set)
 
 	len = space_len(str, set);
 	spaced = spacify(str, set, len);
-	out = ft_split (spaced, ' ');
+	out = ft_split(spaced, ' ');
 	free(spaced);
 	return (out);
 }

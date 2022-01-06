@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:05:20 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/01 19:27:23 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/05 20:06:12 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,15 @@ t_list	*lexer(char **pipes)
 	i = 0;
 	while (pipes[i])
 	{
-		tokens = ft_strtok(pipes[i], "><$");
+		tokens = ft_strtok(pipes[i], "><");
 		if (!validate_redirs(tokens))
 		{
 			ft_lstclear(&out, &free_pipe);
+			free_strs(tokens);
 			return (NULL);
 		}
 		node = ft_lstnew(parse_tokens(tokens));
+		free_strs(tokens);
 		ft_lstadd_back(&out, node);
 		i++;
 	}

@@ -2,19 +2,6 @@
 
 t_dict	*g_env;
 
-void	print_arrow(bool isred)
-{
-	if (isred)
-		printf("\033[0;31m➜\033[0m  ");
-	else
-		printf("\033[0;32m➜\033[0m  ");
-}
-
-int		get_last_exit_code()
-{
-	return (0);
-}
-
 char	*prompt(void)
 {
 	char	*cwd;
@@ -46,7 +33,7 @@ void	sig_handler(int sig)
 	}
 }
 
-int		main(int argc, char **argv, char **environ)
+int	main(int argc, char **argv, char **environ)
 {
 	char	*raw_line;
 	char	*tmp;
@@ -60,19 +47,23 @@ int		main(int argc, char **argv, char **environ)
 		tmp = prompt();
 		raw_line = ft_strtrim(tmp, " \t");
 		if (!tmp)
+		{
+			rl_clear_history();
 			exit(0);
+		}
 		if (!(*raw_line))
-			continue;
+			continue ;
 		add_history(tmp);
 		pipes = parse(raw_line);
+		free(raw_line);
+		free(tmp);
 		if (!pipes)
 		{
 			printf("Parse error\n");
-			continue;
+			continue ;
 		}
 		ft_lstiter(pipes, &deb_print_pipe);
-		free(raw_line);
-		run_cmd(pipes);
+		//run_cmd(pipes);
 		ft_lstclear(&pipes, &free_pipe);
 	}
 }

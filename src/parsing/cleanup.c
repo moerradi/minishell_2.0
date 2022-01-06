@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 19:22:11 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/06 07:51:39 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/06 20:26:44 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_redir(void *redir)
 	redir = NULL;
 }
 
-static void	free_str(void *str)
+void	free_str(void *str)
 {
 	free(str);
 	str = NULL;
@@ -33,10 +33,12 @@ void	free_pipe(void	*pipe)
 	t_pipe	*tmp;
 
 	tmp = (t_pipe *) pipe;
-	free(tmp->command);
-	ft_lstclear(&tmp->args, &free_str);
+	free(tmp->cmd);
+	free_strs(tmp->args);
 	ft_lstclear(&tmp->input_files, &free_redir);
 	ft_lstclear(&tmp->output_files, &free_redir);
+	free(pipe);
+	pipe = NULL;
 }
 
 void	free_strs(char **strs)

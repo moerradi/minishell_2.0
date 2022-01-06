@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:16:44 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/06 19:47:57 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/06 20:26:28 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 #define IGNORE_ALL	"$ \t\\'\"|~<>"
 #define DQUOTE_IGNORE " \t'|~<>"
 #define	EQUOTE_IGNORE "\\\"$"
-
 #define	R_CREATE 1
 #define R_APPEND 2
 #define	R_READ 3
@@ -50,14 +49,12 @@ typedef	struct		s_pipe
 {
 	t_list	*output_files;
 	t_list	*input_files;
-	char	*command;
-	char	**args;
+	char	*cmd;
 	int		ac;
+	char	**args;
 }				t_pipe;
 
-extern t_dict	*g_env;
 
-int		env(void);
 void	fix_token(char *str);
 t_redir	*redir_new(char *path, t_token mode);
 t_pipe	*init_pipe();
@@ -70,8 +67,14 @@ t_pipe	*parse_tokens(char **tokens);
 char	*expand(char *key);
 void	free_pipe(void	*pipe);
 void	free_strs(char **strs);
+void	free_str(void *str);
 char	**mini_split(char *av, char c);
+char	*expand_str(char *str);
+char	**lst_to_arr(t_list	*lst, size_t size);
+char	**extok(char *str, const char *set);
+t_list	*parse(char *cmd);
 //debug utils
+// #ifdef DEBUG
 void	deb_print_strarr(char **strs);
 void	deb_print_pipe(void *pipe);
 // execution
