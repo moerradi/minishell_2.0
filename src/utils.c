@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 19:07:46 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/02 22:38:00 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/07 04:31:17 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,32 @@ char	**lst_to_arr(t_list	*lst, size_t size)
 	}
 	out[i] = NULL;
 	return (out);
+}
+
+int		str_alnum(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	str_alnum(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '=')
+			return (1);
+		i++;
+	}
+	return (0);
 }

@@ -6,13 +6,21 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 13:09:08 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/05 17:55:24 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/06 23:51:16 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
 extern char	**environ;
+
+int	unset_error(char *av)
+{
+	ft_putstr_fd("3lash: unset: '", 2);
+	ft_putstr_fd(av, 2);
+	ft_putstr_fd("' :not a valid identifier\n", 2);
+	return (1);
+}
 
 int	unset_one(char *arg)
 {
@@ -37,11 +45,36 @@ int	unset_one(char *arg)
 	}
 }
 
-void	unset(char **args)
+int	is_str_alnum(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (args[i])
-		unset_one(args[i++]);
+	while (str[i])
+	{
+		if (!ft_isalnum(str[i]))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	unset(char **args)
+{
+	int	i;
+	int	out;
+
+	i = 0;
+	out = 0;
+	while (args[i] != NULL)
+	{
+		if (!ft_isalpha(args[i][0]))
+			out = unset_error(args[i]);
+		else if (is_str_alnum(args[i]))
+			out = unset_error(args[i]);
+		else if (ft_strchr(args[i], '='))
+			unset_one(args[i++]);
+		i++;
+	}
+	return (out);
 }

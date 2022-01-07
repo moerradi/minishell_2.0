@@ -6,23 +6,22 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 14:32:47 by moerradi          #+#    #+#             */
-/*   Updated: 2021/12/16 13:06:39 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/06 20:34:55 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int		cd_err(char *arg)
+int	cd_err(char *arg)
 {
 	ft_putstr_fd("bash: cd: ", 2);
 	perror(arg);
 	return (1);
 }
 
-
-int		cd(char **args, int args_count)
+int	cd(char **args, int args_count)
 {
-	char *home;
+	char	*home;
 
 	if (args_count == 0)
 	{
@@ -37,7 +36,7 @@ int		cd(char **args, int args_count)
 	}
 	else if (args_count == 1)
 	{
-		if(chdir(args[0]) == -1)
+		if (chdir(args[0]) == -1)
 			return (cd_err(args[0]));
 	}
 	else

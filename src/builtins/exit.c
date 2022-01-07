@@ -3,23 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
-/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/02 01:44:01 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/04 14:57:12 by moerradi         ###   ########.fr       */
-=======
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 18:01:26 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/03 18:25:39 by kdrissi-         ###   ########.fr       */
->>>>>>> 0e632f5568d757c00064c6d0ed45b6e67bbe75a7
+/*   Updated: 2022/01/06 20:36:37 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int		exit_err(char *arg)
+int	exit_err(char *arg)
 {
 	ft_putstr_fd("bash: exit: ", 2);
 	ft_putstr_fd(arg, 2);
@@ -27,19 +20,18 @@ int		exit_err(char *arg)
 	return (2);
 }
 
-
 bool	isnumeric(char	*str)
 {
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 		if (!ft_isdigit(str[i++]))
 			return (false);
 	return (true);
 }
 
-int		bash_exit(char **args, int ac)
+int	bash_exit(char **args, int ac)
 {
 	ft_putendl_fd("exit", 2);
 	if (ac == 0)

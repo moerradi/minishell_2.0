@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 23:30:23 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/06 20:21:08 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/07 04:39:32 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,52 @@
 
 extern char **environ;
 
-int		is_builtin(t_pipe *cmd)
+void	ft_execvp(char *cmd, char **args)
 {
-	if (!ft_strcmp(cmd->command, "echo"))
-		return (echo(cmd->args, cmd->ac));
-	else if (!ft_strcmp(cmd->command,"cd"))
-		return (cd(cmd->args, cmd->ac));
-	else if (!ft_strcmp(cmd->command,"env"))
-		return(env());
-	else if (!ft_strcmp(cmd->command,"unset"))
-		return(unset(cmd->args, cmd->ac));
-	else if (!ft_strcmp(cmd->command,"pwd"))
-		return(pwd(cmd->args, cmd->ac));
-	else if (!ft_strcmp(cmd->command,"exit"))
-		return(ft_exit());
-	else if (!ft_strcmp(cmd->command,"export"))
-		return(export(cmd->args, cmd->ac));
-	else
-		return (127);
+	char		**all_paths;
+	char		*str;
+	char		*path;
+	char		*tmp;
+	int			i;
+
+	str = getenv("PATH");
+	all_paths = ft_split(str, ':');
+	i = 0;
+	while (all_paths[i])
+	{
+		tmp = ft_strjoin("/", cmd);
+		path = ft_strjoin(all_paths[i], tmp);
+		free(tmp);
+		free(all_paths[i]);
+		execve(path, args, environ);
+		free(path);
+		i++;
+	}
+	free(all_paths);
+	i = errno;
+	ft_putstr_fd(strerror(i), 2);
 }
+
+// int		is_builtin(t_pipe *cmd)
+// {
+// 	// remember > cmd->args + 1
+// 	if (!ft_strcmp(cmd->command, "echo"))
+// 		return (echo(cmd->args, cmd->ac));
+// 	else if (!ft_strcmp(cmd->command,"cd"))
+// 		return (cd(cmd->args, cmd->ac));
+// 	else if (!ft_strcmp(cmd->command,"env"))
+// 		return(env());
+// 	else if (!ft_strcmp(cmd->command,"unset"))
+// 		return(unset(cmd->args, cmd->ac));
+// 	else if (!ft_strcmp(cmd->command,"pwd"))
+// 		return(pwd(cmd->args, cmd->ac));
+// 	else if (!ft_strcmp(cmd->command,"exit"))
+// 		return(ft_exit());
+// 	else if (!ft_strcmp(cmd->command,"export"))
+// 		return(export(cmd->args, cmd->ac));
+// 	else
+// 		return (127);
+// }
 
 // void	ft_execvp(char *cmd, char **args, char **env)
 // {
@@ -128,31 +155,31 @@ int		is_builtin(t_pipe *cmd)
 
 
 
-void	run_cmd(t_list *cmd, int *exit_code)
-{
-	int	fd[2];
-	int	in;
-	int out;
-	int status;
-	int first;
+// void	run_cmd(t_list *cmd, int *exit_code)
+// {
+// 	int	fd[2];
+// 	int	in;
+// 	int out;
+// 	int status;
+// 	int first;
 
-	first = true;
-	while (cmd!= NULL)
-	{
-		get_i_o((t_pipe *)cmd->content,&in, &out, fd);
-		if (first && in == fd[0])
-			in = 0;
-		if (!cmd->next && out == fd[1])
-			out = 1;
-		status = execute_cmd((t_pipe *)cmd->content, in , out);
-		if (out != 1)
-			close(out);  
-		if (in != 0)
-			close(in);
-		first = false;
-		cmd = cmd->next;
-	}
-}
+// 	first = true;
+// 	while (cmd!= NULL)
+// 	{
+// 		get_i_o((t_pipe *)cmd->content,&in, &out, fd);
+// 		if (first && in == fd[0])
+// 			in = 0;
+// 		if (!cmd->next && out == fd[1])
+// 			out = 1;
+// 		status = execute_cmd((t_pipe *)cmd->content, in , out);
+// 		if (out != 1)
+// 			close(out);  
+// 		if (in != 0)
+// 			close(in);
+// 		first = false;
+// 		cmd = cmd->next;
+// 	}
+// }
 
 // int		main(int ac, char **av)
 // {
