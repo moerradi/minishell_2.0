@@ -6,16 +6,11 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 19:47:16 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/03 19:22:53 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/07 20:08:54 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
-
-void	ft_putstr(void *str)
-{
-	printf("%s ", (char *)str);
-}
+#include "../../headers/minishell.h"
 
 void	ft_putredir(void *redir)
 {

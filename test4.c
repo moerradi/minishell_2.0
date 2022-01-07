@@ -49,7 +49,7 @@ int	ft_putenv(const char *string)
 int test()
 {
 
-	ft_putenv("ww=wwsa");
+	ft_putenv("ww=");
 
 	ft_putenv("sassa=sas");
 	ft_putenv("kalshaaaaa=lmknessi");
@@ -58,9 +58,7 @@ int test()
 	ft_putenv("lili=yahlili");
 	ft_putenv("s=k");
 
-	int i = 0;
-	while (environ[i])
-	printf(" %s\n", environ[i++]);
+
 		// i++;
 // __add_to_environ("HELLO", NULL,"HELLO=ZZS",1);
 // __add_to_environ("Mello", NULL,"Mello=ZZS",1);

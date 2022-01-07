@@ -1,12 +1,10 @@
-#include <string.h>
-#include <stdio.h>
+#include "./headers/minishell.h"
 
-int main()
+
+
+int main(int ac, char **av)
 {
-	char * str = strdup("Hello     world thid id");
-	char *s;
-	s = strtok(str, " ");
-	printf("%s\n", s);
-	while (s = (strtok(NULL, " ")))
-		printf("%s\n", s);
+	char **ss = adv_split(av[1], ' ');
+	deb_print_strarr(ss);
+	// printf("%i\n", toklen(av[1], ' '));
 }
