@@ -6,11 +6,27 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:05:20 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/05 20:06:12 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/08 11:50:02 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+t_token	get_token_type(char	*token)
+{
+	if (!ft_strcmp(token, ">"))
+		return (so_redir);
+	else if (!ft_strcmp(token, "<"))
+		return (si_redir);
+	else if (!ft_strcmp(token, ">>"))
+		return (do_redir);
+	else if (!ft_strcmp(token, "<<"))
+		return (di_redir);
+	else if (!ft_strcmp(token, "$"))
+		return (dollar);
+	else
+		return (nontoken);
+}
 
 void	fix_token(char *str)
 {
@@ -85,13 +101,16 @@ t_list	*parse(char *cmd)
 {
 	char	**pipes;
 	char	*tmp;
+	char	*tosplit;
 	t_list	*ret;
 
-	tmp = parse_quotes(cmd);
-	if (!tmp)
+	if (!parse_quotes(cmd))
 		return (NULL);
-	pipes = split_pipes(tmp);
+	tmp = handle_env(cmd);
+	tosplit = removechars(tmp, "'\"\\");
 	free(tmp);
+	pipes = split_pipes(tosplit);
+	free(tosplit);
 	if (!pipes)
 		return (NULL);
 	ret = lexer(pipes);

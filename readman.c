@@ -171,7 +171,7 @@ execute_line (line)
 /* Look up NAME as the name of a command, and return a pointer to that
    command.  Return a NULL pointer if NAME isn't a command name. */
 COMMAND *
-find_command (name)
+ find_command (name)
      char *name;
 {
   register int i;

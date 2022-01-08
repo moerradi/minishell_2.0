@@ -29,8 +29,8 @@
 # include <errno.h>
 # include <fcntl.h>
 
-#define IGNORE_ALL	"$ \t\\'\"|~<>"
-#define DQUOTE_IGNORE " \t'|~<>"
+#define IGNORE_ALL	"$ \\'\"|~<>"
+#define DQUOTE_IGNORE " '|~<>"
 #define	EQUOTE_IGNORE "\\\"$"
 #define	R_CREATE 1
 #define R_APPEND 2
@@ -58,7 +58,7 @@ typedef	struct		s_pipe
 void	fix_token(char *str);
 t_redir	*redir_new(char *path, t_token mode);
 t_pipe	*init_pipe();
-char	*parse_quotes(char *line);
+bool	parse_quotes(char *line);
 char	**split_pipes(char *s);
 t_token	get_token_type(char	*token);
 bool	validate_redirs(char **tokens);
@@ -72,6 +72,8 @@ char	**mini_split(char *av, char c);
 char	*expand_str(char *str);
 char	**lst_to_arr(t_list	*lst, size_t size);
 char	**extok(char *str, const char *set);
+char	**adv_split(char *str, char c);
+char	*handle_env(char *str);
 t_list	*parse(char *cmd);
 //debug utils
 // #ifdef DEBUG

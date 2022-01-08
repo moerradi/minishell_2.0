@@ -1,7 +1,5 @@
 #include "../headers/minishell.h"
 
-t_dict	*g_env;
-
 char	*prompt(void)
 {
 	char	*cwd;
@@ -51,16 +49,17 @@ int	main(int argc, char **argv, char **environ)
 			exit(0);
 		}
 		if (!(*raw_line))
+		{
+			free(raw_line);
+			free(tmp);
 			continue ;
+		}
 		add_history(tmp);
 		pipes = parse(raw_line);
 		free(raw_line);
 		free(tmp);
 		if (!pipes)
-		{
 			printf("Parse error\n");
-			continue ;
-		}
 		ft_lstiter(pipes, &deb_print_pipe);
 		int id = fork();
 		run_cmd(pipes);

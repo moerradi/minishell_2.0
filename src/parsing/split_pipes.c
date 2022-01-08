@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 13:27:35 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/06 20:18:23 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/08 09:46:40 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	**split_pipes(char *s)
 			len++;
 		out[i] = ft_substr(s, start, len);
 		if (out[i] == NULL || is_all_space(out[i]))
-			return (ft_garbage(&out, i));
+			return (ft_garbage(&out, i + 1));
 		start += len + 1;
 		i++;
 	}

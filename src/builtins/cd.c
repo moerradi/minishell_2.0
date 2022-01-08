@@ -25,7 +25,7 @@ int	cd(char **args, int args_count)
 
 	if (args_count == 0)
 	{
-		home = expand("HOME");
+		home = getenv("HOME");
 		if (!home || !(*home))
 		{
 			ft_putstr_fd("bash: cd: HOME not set\n", 2);

@@ -43,7 +43,7 @@ static char	*spacify(char *str, const char *set, int len)
 
 	j = 0;
 	i = 0;
-	out = malloc(sizeof(char) * len);
+	out = malloc(sizeof(char) * (len + 1));
 	while (i < len)
 	{
 		if (ft_strchr(set, str[j]) && str[j] == str[j + 1])
@@ -73,9 +73,14 @@ char	**ft_strtok(char *str, const char *set)
 	int		len;
 
 	len = space_len(str, set);
-	spaced = spacify(str, set, len);
-	out = ft_split(spaced, ' ');
-	free(spaced);
+	if (len != (int)ft_strlen(str))
+	{
+		spaced = spacify(str, set, len);
+		out = ft_split(spaced, ' ');
+		free(spaced);
+	}
+	else
+		out = ft_split(str, ' ');
 	return (out);
 }
 

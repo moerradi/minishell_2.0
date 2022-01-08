@@ -6,20 +6,15 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 19:47:16 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/03 19:22:53 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/08 03:23:08 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
-
-void	ft_putstr(void *str)
-{
-	printf("%s ", (char *)str);
-}
+#include "../../headers/minishell.h"
 
 void	ft_putredir(void *redir)
 {
-	t_redir *tmp;
+	t_redir	*tmp;
 
 	tmp = (t_redir *) redir;
 	printf("%s-%i ", tmp->file, tmp->mode);
@@ -45,9 +40,12 @@ void	deb_print_pipe(void *pipe)
 
 void	deb_print_strarr(char **strs)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (strs[i])
-		printf("%s ", strs[i++]);
+	if (!strs[0])
+		return ;
+	while (strs[i + 1])
+		printf("%s - ", strs[i++]);
+	printf("%s", strs[i]);
 }
