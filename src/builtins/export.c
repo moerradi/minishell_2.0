@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../../headers/minishell.h"
+#include "../../headers/minishell.h"
 
 extern char	**environ;
 
@@ -42,6 +42,17 @@ int	export_error(char *av)
 	return (1);
 }
 
+void	sort_it(int	fd[2])
+{
+	char **args;
+
+	args = ft_split("sort ", ' ');
+	dup2(fd[0], 0);
+	close(fd[0]);
+	close(fd[1]);
+	ft_execvp("sort", args);
+}
+
 void	sort_export(void)
 {
 	int		fd[2];
@@ -67,17 +78,6 @@ void	sort_export(void)
 		close(fd[1]);
 		waitpid(id, NULL, 0);
 	}
-}
-
-void	sort_it(int	fd[2])
-{
-	char **args;
-
-	args = ft_split("sort ", ' ');
-	dup2(fd[0], 0);
-	close(fd[0]);
-	close(fd[1]);
-	ft_execvp("sort", args);
 }
 
 int	export(char **args, int ac)

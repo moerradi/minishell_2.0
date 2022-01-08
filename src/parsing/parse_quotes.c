@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 01:58:08 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/01 19:19:20 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/08 09:47:54 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	*handle_dquote(bool *escape, bool *dquote, char *out)
 	}
 	else if (*out == '"')
 		*dquote = false;
-	if (ft_strchr(DQUOTE_IGNORE, *out))
+	else if (ft_strchr(DQUOTE_IGNORE, *out))
 		*out = *out * (-1);
 }
 
@@ -52,13 +52,12 @@ void	*handle_normal(bool *squote, bool *dquote, bool *escape, char c)
 		*escape = true;
 }
 
-char	*parse_quotes(char *line)
+bool	parse_quotes(char *line)
 {
 	int		i;
 	bool	squote;
 	bool	dquote;
 	bool	escape;
-	char	*out;
 
 	squote = false;
 	dquote = false;
@@ -76,7 +75,6 @@ char	*parse_quotes(char *line)
 			handle_normal(&squote, &dquote, &escape, line[i++]);
 	}
 	if (squote || dquote || escape)
-		return (NULL);
-	out = removechars(line, "'\"\\");
-	return (out);
+		return (false);
+	return (true);
 }

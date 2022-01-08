@@ -54,7 +54,7 @@ int        get_next_line(int fd, char **line)
 
     if (!(rest[fd] = buffered_read(fd, rest[fd])))
         return (-1);
-    if (((temp = ft_strchr_s(rest[fd], '\n'))) > 0)
+    if (((temp = ft_strchr_s(rest[fd], '\n'))))
     {
         newline_pos = temp - rest[fd];
         temp = ft_strdup(temp + 1);

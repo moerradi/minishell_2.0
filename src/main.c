@@ -1,7 +1,5 @@
 #include "../headers/minishell.h"
 
-t_dict	*g_env;
-
 char	*prompt(void)
 {
 	char	*cwd;
@@ -39,7 +37,6 @@ int	main(int argc, char **argv, char **environ)
 	char	*tmp;
 	t_list	*pipes;
 
-	g_env = mdict_fill(environ);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
 	while (1)
@@ -52,16 +49,17 @@ int	main(int argc, char **argv, char **environ)
 			exit(0);
 		}
 		if (!(*raw_line))
+		{
+			free(raw_line);
+			free(tmp);
 			continue ;
+		}
 		add_history(tmp);
 		pipes = parse(raw_line);
 		free(raw_line);
 		free(tmp);
 		if (!pipes)
-		{
 			printf("Parse error\n");
-			continue ;
-		}
 		ft_lstiter(pipes, &deb_print_pipe);
 		//run_cmd(pipes);
 		ft_lstclear(&pipes, &free_pipe);
