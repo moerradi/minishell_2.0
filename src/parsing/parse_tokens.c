@@ -6,27 +6,11 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 01:13:34 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/08 11:47:24 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/08 11:49:34 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
-
-t_token	get_token_type(char	*token)
-{
-	if (!ft_strcmp(token, ">"))
-		return (so_redir);
-	else if (!ft_strcmp(token, "<"))
-		return (si_redir);
-	else if (!ft_strcmp(token, ">>"))
-		return (do_redir);
-	else if (!ft_strcmp(token, "<<"))
-		return (di_redir);
-	else if (!ft_strcmp(token, "$"))
-		return (dollar);
-	else
-		return (nontoken);
-}
 
 static void	parsing_helper(t_pipe *pipe, char *str, t_list **tmp)
 {
@@ -44,7 +28,7 @@ static void	parsing_helper(t_pipe *pipe, char *str, t_list **tmp)
 
 bool	find_and_replace(t_list	*list, char *str)
 {
-	t_redir *tmp;
+	t_redir	*tmp;
 
 	while (list)
 	{
@@ -71,7 +55,7 @@ static void	handle_redir(t_pipe *pipe, t_token t, char *str)
 		if (find_and_replace(pipe->input_files, str))
 			return ;
 	node = ft_lstnew(redir_new(str, t));
-	if (t== si_redir || t == di_redir)
+	if (t == si_redir || t == di_redir)
 		ft_lstadd_back(&pipe->input_files, node);
 	else
 		ft_lstadd_back(&pipe->output_files, node);

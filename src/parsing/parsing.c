@@ -6,11 +6,27 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:05:20 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/08 09:49:01 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/08 11:50:02 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+t_token	get_token_type(char	*token)
+{
+	if (!ft_strcmp(token, ">"))
+		return (so_redir);
+	else if (!ft_strcmp(token, "<"))
+		return (si_redir);
+	else if (!ft_strcmp(token, ">>"))
+		return (do_redir);
+	else if (!ft_strcmp(token, "<<"))
+		return (di_redir);
+	else if (!ft_strcmp(token, "$"))
+		return (dollar);
+	else
+		return (nontoken);
+}
 
 void	fix_token(char *str)
 {
