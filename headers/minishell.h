@@ -56,7 +56,7 @@ typedef struct s_pipe
 void	fix_token(char *str);
 t_redir	*redir_new(char *path, t_token mode);
 t_pipe	*init_pipe(void);
-bool	parse_quotes(char *line);
+char	*parse_quotes(char *line);
 char	**split_pipes(char *s);
 t_token	get_token_type(char	*token);
 bool	validate_redirs(char **tokens);
@@ -66,6 +66,7 @@ char	*expand(char *key);
 void	free_pipe(void	*pipe);
 void	free_strs(char **strs);
 void	free_str(void *str);
+char	*ret_free(char *str);
 char	**mini_split(char *av, char c);
 char	*expand_str(char *str);
 char	**lst_to_arr(t_list	*lst, size_t size);
