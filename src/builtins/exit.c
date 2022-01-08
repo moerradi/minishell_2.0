@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 18:01:26 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/06 20:36:37 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/07 22:21:58 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	exit_err(char *arg)
 	return (2);
 }
 
-bool	isnumeric(char	*str)
+bool	ft_isnumeric(char	*str)
 {
 	int	i;
 
@@ -38,7 +38,7 @@ int	bash_exit(char **args, int ac)
 		exit(0);
 	if (ac >= 1)
 	{
-		if (!isnumeric(args[0]))
+		if (!ft_isnumeric(args[0]))
 			exit(exit_err(args[0]));
 		else if (ac == 1)
 			exit(ft_atoi(args[0]));

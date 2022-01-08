@@ -6,11 +6,12 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 02:07:40 by kdrissi-          #+#    #+#             */
-/*   Updated: 2021/12/21 04:10:17 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/08 01:52:32 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+// #include "libft.h"
+#include "../../headers/minishell.h"
 
 static int	space_len(char *str, const char *set)
 {
@@ -76,4 +77,17 @@ char	**ft_strtok(char *str, const char *set)
 	out = ft_split(spaced, ' ');
 	free(spaced);
 	return (out);
+}
+
+int		main(int ac, char **av)
+{
+	char *str = ft_strdup(av[1]);
+	char *tmp = parse_quotes(av[1]);
+	int len = space_len(tmp, "<>");
+	int i = ft_strlen(tmp);
+	printf("strlen = %i\n", i);
+	printf("len = %i\n", len);
+	printf("parse = %s\n", tmp);
+	char **args = ft_strtok(tmp, "><");
+	printf("tok = %i\n", args[2][19]);
 }

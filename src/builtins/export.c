@@ -6,13 +6,27 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 13:41:48 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/07 04:32:47 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/07 22:29:15 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
 extern char	**environ;
+
+int	str_alnum(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 void	print_export(int fd[2])
 {
@@ -42,6 +56,17 @@ int	export_error(char *av)
 	return (1);
 }
 
+void	sort_it(int	fd[2])
+{
+	char **args;
+
+	args = ft_split("sort ", ' ');
+	dup2(fd[0], 0);
+	close(fd[0]);
+	close(fd[1]);
+	ft_execvp("sort", args);
+}
+
 void	sort_export(void)
 {
 	int		fd[2];
@@ -49,9 +74,11 @@ void	sort_export(void)
 	int		id;
 
 	if (pipe(fd) == -1)
+		printf("e");
 		//error ;
 	pid = fork();
 	if (pid < 0)
+		printf("e");
 		//error;
 	if (pid == 0)
 		print_export(fd);
@@ -67,17 +94,6 @@ void	sort_export(void)
 		close(fd[1]);
 		waitpid(id, NULL, 0);
 	}
-}
-
-void	sort_it(int	fd[2])
-{
-	char **args;
-
-	args = ft_split("sort ", ' ');
-	dup2(fd[0], 0);
-	close(fd[0]);
-	close(fd[1]);
-	ft_execvp("sort", args);
 }
 
 int	export(char **args, int ac)

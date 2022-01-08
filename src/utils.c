@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 19:07:46 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/07 04:31:17 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/07 22:29:05 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,3 @@ int		str_alnum(char *str)
 	return (0);
 }
 
-int	str_alnum(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (!ft_isalnum(str[i]) && str[i] != '=')
-			return (1);
-		i++;
-	}
-	return (0);
-}

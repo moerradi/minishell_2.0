@@ -39,7 +39,6 @@ int	main(int argc, char **argv, char **environ)
 	char	*tmp;
 	t_list	*pipes;
 
-	g_env = mdict_fill(environ);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
 	while (1)
@@ -63,7 +62,8 @@ int	main(int argc, char **argv, char **environ)
 			continue ;
 		}
 		ft_lstiter(pipes, &deb_print_pipe);
-		//run_cmd(pipes);
+		int id = fork();
+		run_cmd(pipes);
 		ft_lstclear(&pipes, &free_pipe);
 	}
 }

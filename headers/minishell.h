@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:16:44 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/07 04:01:39 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/07 22:38:09 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,13 @@ int		out_files(t_list *files);
 int		handle_d_i(t_redir *tmp);
 int		in_files(t_list *files);
 // builtins
+int	cd(char **args, int args_count);
+int	echo(char **args, int ac);
 int	env(void);
-int		str_alnum(char *str);
-void	print_export(int fd[2]);
-
+int	bash_exit(char **args, int ac);
+bool	ft_isnumeric(char	*str);
+int	export(char **args, int ac);
+int	pwd(char **args, int args_count);
+int	unset(char **args);
+void	get_i_o(t_pipe *cmd, int *in, int *out, int fd[2]);
 #endif
