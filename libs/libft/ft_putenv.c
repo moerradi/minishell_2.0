@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 18:23:48 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/06 21:29:14 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/08 23:30:18 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,15 @@ extern char **environ;
 
 int	ft_putenv(const char *string)
 {
-	static char	**last_env = NULL;
-	char	**ep;
-	char	**new_env;
-	size_t	namelen;
-	size_t	size;
-	char	*name;
+	static char	**last_env;
+	char		**ep;
+	char		**new_env;
+	size_t		namelen;
+	size_t		size;
+	char		*name;
+	char 		*np;
 
+	last_env = NULL;
 	name = ft_strndup(string, ft_strchr(string, '=') - string);
 	namelen = ft_strlen(name);
 	ep = environ;
@@ -76,8 +78,7 @@ int	ft_putenv(const char *string)
 		last_env = environ;
 	}
 	free(name);
-	char *np;
 	np = (char *) string;
 	*ep = np;
-	return 0;
+	return (0);
 }

@@ -6,27 +6,13 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 13:41:48 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/07 22:29:15 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/08 23:42:25 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
 extern char	**environ;
-
-int	str_alnum(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (!ft_isalnum(str[i]) && str[i] != '=')
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 void	print_export(int fd[2])
 {
@@ -56,9 +42,9 @@ int	export_error(char *av)
 	return (1);
 }
 
-void	sort_it(int	fd[2])
+void	sort_it(int fd[2])
 {
-	char **args;
+	char	**args;
 
 	args = ft_split("sort ", ' ');
 	dup2(fd[0], 0);
@@ -74,12 +60,10 @@ void	sort_export(void)
 	int		id;
 
 	if (pipe(fd) == -1)
-		printf("e");
-		//error ;
+		printf("e\n");
 	pid = fork();
 	if (pid < 0)
-		printf("e");
-		//error;
+		printf("e\n");
 	if (pid == 0)
 		print_export(fd);
 	else
@@ -87,7 +71,7 @@ void	sort_export(void)
 		waitpid(pid, NULL, 0);
 		id = fork();
 		if (id < 0)
-			//error
+			printf("e\n");
 		if (id == 0)
 			sort_it(fd);
 		close(fd[0]);

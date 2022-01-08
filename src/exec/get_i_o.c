@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 19:43:19 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/06 20:21:17 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/08 23:50:27 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	out_files(t_list *files)
 	while (files != NULL)
 	{
 		tmp = (t_redir *)files->content;
-		if (tmp->mode == do_redir)
+		if (tmp->mode == d_out)
 			fd = open(tmp->file, O_RDWR | O_APPEND | O_CREAT, 0777);
-		else if (tmp->mode == so_redir)
+		else if (tmp->mode == s_out)
 			fd = open(tmp->file, O_RDWR | O_CREAT | O_TRUNC, 0777);
 		if (fd == -1)
 			perror(tmp->file);
@@ -66,9 +66,9 @@ int	in_files(t_list *files)
 	while (files != NULL)
 	{
 		tmp = (t_redir *)files->content;
-		if (tmp->mode == si_redir)
+		if (tmp->mode == s_in)
 			fd = open(tmp->file, O_RDONLY, 0777);
-		else if (tmp->mode == di_redir)
+		else if (tmp->mode == d_in)
 			fd = handle_d_i(tmp);
 		if (fd == -1)
 			perror(tmp->file);
