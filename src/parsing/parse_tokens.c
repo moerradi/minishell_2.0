@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 01:13:34 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/08 09:49:15 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/08 11:47:24 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,27 @@ static void	parsing_helper(t_pipe *pipe, char *str, t_list **tmp)
 	fix_token(str);
 	if (!pipe->cmd)
 		pipe->cmd = ft_strdup(str);
-	else
+	node = ft_lstnew(ft_strdup(str));
+	ft_lstadd_back(tmp, node);
+	pipe->ac++;
+}
+
+bool	find_and_replace(t_list	*list, char *str)
+{
+	t_redir *tmp;
+
+	while (list)
 	{
-		node = ft_lstnew(ft_strdup(str));
-		ft_lstadd_back(tmp, node);
-		pipe->ac++;
+		tmp = (t_redir *)list->content;
+		if (tmp->mode == di_redir)
+		{
+			free(tmp->file);
+			tmp->file = ft_strdup(str);
+			return (true);
+		}
+		list = list->next;
 	}
+	return (false);
 }
 
 static void	handle_redir(t_pipe *pipe, t_token t, char *str)
@@ -52,8 +67,11 @@ static void	handle_redir(t_pipe *pipe, t_token t, char *str)
 	if (!str)
 		return ;
 	fix_token(str);
+	if (t == di_redir)
+		if (find_and_replace(pipe->input_files, str))
+			return ;
 	node = ft_lstnew(redir_new(str, t));
-	if (t == si_redir || t == di_redir)
+	if (t== si_redir || t == di_redir)
 		ft_lstadd_back(&pipe->input_files, node);
 	else
 		ft_lstadd_back(&pipe->output_files, node);
