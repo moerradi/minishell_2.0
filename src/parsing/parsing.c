@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:05:20 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/08 11:50:02 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/09 00:18:56 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,16 +101,18 @@ t_list	*parse(char *cmd)
 {
 	char	**pipes;
 	char	*tmp;
-	char	*tosplit;
+	char	*tmp2;
 	t_list	*ret;
 
-	if (!parse_quotes(cmd))
+	tmp = parse_quotes(cmd);
+	if (!tmp)
 		return (NULL);
-	tmp = handle_env(cmd);
-	tosplit = removechars(tmp, "'\"\\");
+	tmp2 = handle_env(tmp);
 	free(tmp);
-	pipes = split_pipes(tosplit);
-	free(tosplit);
+	tmp = removechars(tmp2, "'\"\\");
+	free(tmp2);
+	pipes = split_pipes(tmp);
+	free(tmp);
 	if (!pipes)
 		return (NULL);
 	ret = lexer(pipes);

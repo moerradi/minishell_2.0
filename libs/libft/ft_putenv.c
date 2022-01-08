@@ -14,6 +14,30 @@
 
 extern char **environ;
 
+// size_t		calc_move(const char *string, size_t *size)
+// {
+// 	size_t	namelen;
+// 	size_t	ret;
+// 	char	*name;
+// 	char	*eq;
+// 	char	*ep;
+
+// 	eq = ft_strchr(string, '=');
+// 	if (!eq)
+// 		return (0);	
+// 	name = ft_strndup(string, eq - string);
+// 	size = 0;
+// 	ret = 0;
+// 	while (*ep != NULL)
+// 	{
+// 		if (!ft_strncmp (*ep, name, namelen) && (*ep)[namelen] == '=')
+// 			break;
+// 		else
+// 			size++;
+// 		++ep;
+// 	}
+// }
+
 int	ft_putenv(const char *string)
 {
 	static char	**last_env = NULL;

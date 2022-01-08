@@ -12,6 +12,12 @@
 
 #include "../../headers/minishell.h"
 
+char	*ret_free(char *str)
+{
+	free(str);
+	return (NULL);
+}
+
 void	free_redir(void *redir)
 {
 	t_redir	*tmp;
