@@ -60,8 +60,7 @@ int	main(int argc, char **argv, char **environ)
 		free(tmp);
 		if (!pipes)
 			printf("Parse error\n");
-		ft_lstiter(pipes, &deb_print_pipe);
-		int id = fork();
+		// ft_lstiter(pipes, &deb_print_pipe);
 		run_cmd(pipes);
 		ft_lstclear(&pipes, &free_pipe);
 	}

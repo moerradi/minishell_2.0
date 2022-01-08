@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 01:13:34 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/08 11:49:34 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/08 23:20:52 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	find_and_replace(t_list	*list, char *str)
 	while (list)
 	{
 		tmp = (t_redir *)list->content;
-		if (tmp->mode == di_redir)
+		if (tmp->mode == d_in)
 		{
 			free(tmp->file);
 			tmp->file = ft_strdup(str);
@@ -51,11 +51,11 @@ static void	handle_redir(t_pipe *pipe, t_token t, char *str)
 	if (!str)
 		return ;
 	fix_token(str);
-	if (t == di_redir)
+	if (t == d_in)
 		if (find_and_replace(pipe->input_files, str))
 			return ;
 	node = ft_lstnew(redir_new(str, t));
-	if (t == si_redir || t == di_redir)
+	if (t == s_in || t == d_in)
 		ft_lstadd_back(&pipe->input_files, node);
 	else
 		ft_lstadd_back(&pipe->output_files, node);
@@ -84,7 +84,7 @@ t_pipe	*parse_tokens(char **tokens)
 	while (tokens[i])
 	{
 		t = get_token_type(tokens[i]);
-		if (t == si_redir || t == di_redir || t == so_redir || t == do_redir)
+		if (t == s_in || t == d_in || t == s_out || t == d_out)
 			handle_redir(out, t, tokens[++i]);
 		else
 			parsing_helper(out, tokens[i], &tmp);

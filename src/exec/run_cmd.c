@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 23:30:23 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/07 22:35:36 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/09 00:25:22 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,20 @@ extern char **environ;
 
 int		is_builtin(t_pipe *cmnd)
 {
-	// remember > cmd->args + 1
 	if (!ft_strcmp(cmnd->cmd, "echo"))
-		return (echo(cmnd->args, cmnd->ac));
+		return (echo(cmnd->args + 1, cmnd->ac - 1 ));
 	else if (!ft_strcmp(cmnd->cmd,"cd"))
-		return (cd(cmnd->args, cmnd->ac));
+		return (cd(cmnd->args + 1, cmnd->ac - 1));
 	else if (!ft_strcmp(cmnd->cmd,"env"))
 		return(env());
 	else if (!ft_strcmp(cmnd->cmd,"unset"))
-		return(unset(cmnd->args));
+		return(unset(cmnd->args + 1));
 	else if (!ft_strcmp(cmnd->cmd,"pwd"))
-		return(pwd(cmnd->args, cmnd->ac));
+		return(pwd(cmnd->args + 1, cmnd->ac - 1));
 	else if (!ft_strcmp(cmnd->cmd,"exit"))
-		return(bash_exit(cmnd->args, cmnd->ac));
+		return(bash_exit(cmnd->args + 1, cmnd->ac - 1));
 	else if (!ft_strcmp(cmnd->cmd,"export"))
-		return(export(cmnd->args, cmnd->ac));
+		return(export(cmnd->args + 1, cmnd->ac - 1));
 	else
 		return (127);
 }
@@ -105,8 +104,6 @@ int execute_cmd(t_pipe *cmnd, int in, int out)
 	return (status);
 }
 
-
-
 void	run_cmd(t_list *cmd)
 {
 	int	fd[2];
@@ -118,12 +115,15 @@ void	run_cmd(t_list *cmd)
 	first = true;
 	while (cmd!= NULL)
 	{
+		// in = 0;
+		// out = 1;
 		get_i_o((t_pipe *)cmd->content,&in, &out, fd);
-		if (first && in == fd[0])
-			in = 0;
-		if (!cmd->next && out == fd[1])
-			out = 1;
-		status = execute_cmd((t_pipe *)cmd->content, in , out);
+		printf("in = %i\nout = %i\n", in, out);
+		// if (first && in == fd[0])
+		// 	in = 0;
+		// if (!cmd->next && out == fd[1])
+		// 	out = 1;
+		// status = execute_cmd((t_pipe *)cmd->content, in , out);
 		if (out != 1)
 			close(out);  
 		if (in != 0)
@@ -132,12 +132,3 @@ void	run_cmd(t_list *cmd)
 		cmd = cmd->next;
 	}
 }
-
-int		main(int ac, char **av)
-{
-	t_list *pipes;
-	
-	pipes = parse(av[1]);
-	run_cmd(pipes);
-}
-

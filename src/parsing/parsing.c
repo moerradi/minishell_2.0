@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:05:20 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/08 11:50:02 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/08 23:20:52 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 t_token	get_token_type(char	*token)
 {
 	if (!ft_strcmp(token, ">"))
-		return (so_redir);
+		return (s_out);
 	else if (!ft_strcmp(token, "<"))
-		return (si_redir);
+		return (s_in);
 	else if (!ft_strcmp(token, ">>"))
-		return (do_redir);
+		return (d_out);
 	else if (!ft_strcmp(token, "<<"))
-		return (di_redir);
+		return (d_in);
 	else if (!ft_strcmp(token, "$"))
 		return (dollar);
 	else
@@ -54,7 +54,7 @@ bool	validate_redirs(char **tokens)
 	while (tokens[i])
 	{
 		t = get_token_type(tokens[i++]);
-		if (t == si_redir || t == di_redir || t == so_redir || t == do_redir)
+		if (t == s_in || t == d_in || t == s_out || t == d_out)
 		{
 			if (active)
 				return (false);
