@@ -6,13 +6,21 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 13:41:48 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/08 23:42:25 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/09 21:23:18 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
 extern char	**environ;
+
+int	export_error(char *av)
+{
+	ft_putstr_fd("3lash: export: '", 2);
+	ft_putstr_fd(av, 2);
+	ft_putstr_fd("' :not a valid identifier\n", 2);
+	return (1);
+}
 
 void	print_export(int fd[2])
 {
@@ -34,53 +42,48 @@ void	print_export(int fd[2])
 	exit(0);
 }
 
-int	export_error(char *av)
+void	sort_it(int	fd[2], int out)
 {
-	ft_putstr_fd("3lash: export: '", 2);
-	ft_putstr_fd(av, 2);
-	ft_putstr_fd("' :not a valid identifier\n", 2);
-	return (1);
-}
-
-void	sort_it(int fd[2])
-{
-	char	**args;
+	char **args;
 
 	args = ft_split("sort ", ' ');
 	dup2(fd[0], 0);
+	dup2(out, 1);
 	close(fd[0]);
 	close(fd[1]);
 	ft_execvp("sort", args);
 }
 
-void	sort_export(void)
+void	sort_export(int	out)
 {
 	int		fd[2];
 	int		pid;
 	int		id;
 
 	if (pipe(fd) == -1)
-		printf("e\n");
+		printf("e");
+		//error ;
 	pid = fork();
-	if (pid < 0)
-		printf("e\n");
+	// if (pid < 0)
+	// 	printf("e");
+		//error;
 	if (pid == 0)
 		print_export(fd);
 	else
 	{
 		waitpid(pid, NULL, 0);
 		id = fork();
-		if (id < 0)
-			printf("e\n");
+		// if (id < 0)
+			//error
 		if (id == 0)
-			sort_it(fd);
+			sort_it(fd, out);
 		close(fd[0]);
 		close(fd[1]);
 		waitpid(id, NULL, 0);
 	}
 }
 
-int	export(char **args, int ac)
+int	export(char **args, int ac, int fd)
 {
 	int	i;
 	int	out;
@@ -88,7 +91,7 @@ int	export(char **args, int ac)
 	i = 0;
 	out = 0;
 	if (ac == 0)
-		sort_export();
+		sort_export(fd);
 	else
 	{
 		while (args[i] != NULL)

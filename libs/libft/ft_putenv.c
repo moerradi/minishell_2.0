@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 18:23:48 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/08 23:30:18 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/09 04:18:29 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	ft_putenv(char const *string)
 	ep += move;
 	if (*ep == NULL)
 	{
-		printf("coushim\n");
 		create_new_env(size);
 		ep = environ + size;
 	}

@@ -6,13 +6,13 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 12:20:30 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/08 23:54:30 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/09 20:13:40 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	echo(char **args, int ac)
+int	echo(char **args, int ac, int fd)
 {
 	int	i;
 
@@ -20,8 +20,11 @@ int	echo(char **args, int ac)
 	while (!ft_strcmp(args[i], "-n"))
 		i++;
 	while (i < ac - 1)
-		printf("%s ", args[i++]);
-	printf("%s", args[i]);
+	{
+		ft_putstr_fd(args[i++], fd);
+		ft_putstr_fd(" ", fd);
+	}
+	ft_putstr_fd(args[i], fd);
 	if (ft_strcmp(args[0], "-n"))
-		printf("\n");
+		ft_putstr_fd("\n", fd);
 }

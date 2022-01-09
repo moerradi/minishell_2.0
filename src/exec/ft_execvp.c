@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execvp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 20:43:51 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/07 20:44:25 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/10 00:18:27 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern char **environ;
 
-void	ft_execvp(char *cmd, char **args)
+int	ft_execvp(char *cmd, char **args)
 {
 	char		**all_paths;
 	char		*str;
@@ -22,6 +22,8 @@ void	ft_execvp(char *cmd, char **args)
 	char		*tmp;
 	int			i;
 
+	if (ft_strchr(cmd, '/'))
+		return (execve(cmd, args, environ));
 	str = getenv("PATH");
 	all_paths = ft_split(str, ':');
 	i = 0;
@@ -36,6 +38,5 @@ void	ft_execvp(char *cmd, char **args)
 		i++;
 	}
 	free(all_paths);
-	i = errno;
-	ft_putstr_fd(strerror(i), 2);
+	return (-1);
 }

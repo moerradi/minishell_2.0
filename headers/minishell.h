@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:16:44 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/08 23:25:36 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/09 22:53:37 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_list	*parse(char *cmd);
 void	deb_print_strarr(char **strs);
 void	deb_print_pipe(void *pipe);
 // execution
-void	ft_execvp(char *cmd, char **args);
+int		ft_execvp(char *cmd, char **args);
 void	free_redir(void *redir);
 int		out_files(t_list *files);
 int		handle_d_i(t_redir *tmp);
@@ -87,13 +87,13 @@ int		in_files(t_list *files);
 void	run_cmd(t_list *cmd);
 // builtins
 int		cd(char **args, int args_count);
-int		echo(char **args, int ac);
-int		env(void);
+int		echo(char **args, int ac, int fd);
+int		env(int fd);
 int		bash_exit(char **args, int ac);
 bool	ft_isnumeric(char	*str);
-int		export(char **args, int ac);
-int		pwd(char **args, int args_count);
+int		export(char **args, int ac, int fd);
+int		pwd(int args_count);
 int		unset(char **args);
-void	get_i_o(t_pipe *cmd, int *in, int *out, int fd[2]);
+void	get_i_o(t_list *cmd, int *in, int *out, int fd[2], int first);
 int		str_alnum(char *str);
 #endif

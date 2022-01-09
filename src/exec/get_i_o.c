@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   get_i_o.c                                          :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 19:43:19 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/08 23:50:27 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/09 03:51:44 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	out_files(t_list *files)
 	int		fd;
 	t_redir	*tmp;
 
+	fd = 1;
 	while (files != NULL)
 	{
 		tmp = (t_redir *)files->content;
@@ -63,6 +64,7 @@ int	in_files(t_list *files)
 	t_redir	*tmp;
 	int		pp[2];
 
+	fd = 0;
 	while (files != NULL)
 	{
 		tmp = (t_redir *)files->content;
@@ -79,11 +81,27 @@ int	in_files(t_list *files)
 	return (fd);
 }
 
-void	get_i_o(t_pipe *cmd, int *in, int *out, int fd[2])
+void	get_i_o(t_list *cmd, int *in, int *out, int fd[2], int first)
 {
-	*in = fd[0];
-	pipe(fd);
-	*out = fd[1];
-	*out = out_files(cmd->output_files);
-	*in = in_files(cmd->input_files);
+	if (first)
+		*in = 0;
+	else
+		*in = fd[0];
+	if(cmd->next)
+	{
+		pipe(fd);
+		*out = fd[1];
+	}
+	else
+		*out = 1;
+	if (((t_pipe *)cmd->content)->input_files)
+	{
+		*in = in_files(((t_pipe *)cmd->content)->input_files);
+		close(fd[0]);
+	}
+	if(((t_pipe *)cmd->content)->output_files)
+	{
+		*out = out_files(((t_pipe *)cmd->content)->output_files);
+		close(fd[1]);
+	}
 }
