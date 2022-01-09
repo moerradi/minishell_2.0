@@ -34,6 +34,7 @@ static size_t	calc_move(const char *string, size_t *size)
 			(*size)++;
 		r++;
 	}
+	free(name);
 	return (r);
 }
 
@@ -56,7 +57,7 @@ static void	create_new_env(size_t size)
 	last_env = environ;
 }
 
-int	ft_putenv(const char *string)
+int	ft_putenv(char const *string)
 {
 	char		**ep;
 	size_t		size;
@@ -68,10 +69,11 @@ int	ft_putenv(const char *string)
 	ep += move;
 	if (*ep == NULL)
 	{
+		printf("coushim\n");
 		create_new_env(size);
 		ep = environ + size;
 	}
-	np = (char *) string;
+	np = ft_strdup(string);
 	*ep = np;
 	return (0);
 }
