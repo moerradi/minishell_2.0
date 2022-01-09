@@ -12,72 +12,65 @@
 
 #include "libft.h"
 
-extern char **environ;
+extern char	**environ;
 
-// size_t		calc_move(const char *string, size_t *size)
-// {
-// 	size_t	namelen;
-// 	size_t	ret;
-// 	char	*name;
-// 	char	*eq;
-// 	char	*ep;
+static size_t	calc_move(const char *string, size_t *size)
+{
+	size_t	nlen;
+	size_t	r;
+	char	*name;
+	char	*eq;
 
-// 	eq = ft_strchr(string, '=');
-// 	if (!eq)
-// 		return (0);	
-// 	name = ft_strndup(string, eq - string);
-// 	size = 0;
-// 	ret = 0;
-// 	while (*ep != NULL)
-// 	{
-// 		if (!ft_strncmp (*ep, name, namelen) && (*ep)[namelen] == '=')
-// 			break;
-// 		else
-// 			size++;
-// 		++ep;
-// 	}
-// }
+	eq = ft_strchr(string, '=');
+	name = ft_strndup(string, eq - string);
+	nlen = ft_strlen(name);
+	*size = 0;
+	r = 0;
+	while (environ[r] != NULL)
+	{
+		if (!ft_strncmp (environ[r], name, nlen) && environ[r][nlen] == '=')
+			break ;
+		else
+			(*size)++;
+		r++;
+	}
+	return (r);
+}
+
+static void	create_new_env(size_t size)
+{
+	static char	**last_env = NULL;
+	char		**new_env;
+
+	new_env = (char **) malloc(sizeof(char *) * (size + 2));
+	if (last_env)
+	{
+		ft_memcpy((char *)new_env, (char *)last_env, size * sizeof(char *));
+		free(last_env);
+	}
+	else
+		ft_memcpy((char *) new_env, (char *)environ, size * sizeof(char *));
+	new_env[size] = NULL;
+	new_env[size + 1] = NULL;
+	environ = new_env;
+	last_env = environ;
+}
 
 int	ft_putenv(const char *string)
 {
-	static char	**last_env;
 	char		**ep;
-	char		**new_env;
-	size_t		namelen;
 	size_t		size;
-	char		*name;
-	char 		*np;
+	size_t		move;
+	char		*np;
 
-	last_env = NULL;
-	name = ft_strndup(string, ft_strchr(string, '=') - string);
-	namelen = ft_strlen(name);
 	ep = environ;
-	size = 0;
-	while (*ep != NULL)
-	{
-		if (!ft_strncmp (*ep, name, namelen) && (*ep)[namelen] == '=')
-			break;
-		else
-			size++;
-		++ep;
-	}
+	move = calc_move(string, &size);
+	ep += move;
 	if (*ep == NULL)
 	{
-		new_env = (char **) malloc(sizeof(char *) * (size + 2));
-		if (last_env)
-		{
-			ft_memcpy((char *) new_env, (char *) last_env, size * sizeof (char *));
-			free(last_env);
-		}
-		else
-			ft_memcpy((char *) new_env, (char *) environ, size * sizeof (char *));
-		new_env[size] = NULL;
-		new_env[size + 1] = NULL;
-		ep = new_env + size;
-		environ = new_env;
-		last_env = environ;
+		create_new_env(size);
+		ep = environ + size;
 	}
-	free(name);
 	np = (char *) string;
 	*ep = np;
 	return (0);
