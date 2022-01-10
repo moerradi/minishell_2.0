@@ -81,7 +81,7 @@ int	in_files(t_list *files)
 	return (fd);
 }
 
-void	get_i_o(t_list *cmd, int *in, int *out, int fd[2], int first)
+int	get_i_o(t_list *cmd, int *in, int *out, int fd[2], int first)
 {
 	if (first)
 		*in = 0;
@@ -89,7 +89,8 @@ void	get_i_o(t_list *cmd, int *in, int *out, int fd[2], int first)
 		*in = fd[0];
 	if(cmd->next)
 	{
-		pipe(fd);
+		if (pipe(fd) == -1)
+			return (ret_error("FATAL ERROR", 1));
 		*out = fd[1];
 	}
 	else
@@ -104,4 +105,10 @@ void	get_i_o(t_list *cmd, int *in, int *out, int fd[2], int first)
 		*out = out_files(((t_pipe *)cmd->content)->output_files);
 		close(fd[1]);
 	}
+}
+
+int		ret_error(char *str, int ret)
+{
+		ft_putendl_fd(str, 2);
+		return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:16:44 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/09 22:53:37 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/10 11:48:35 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,11 @@ bool	ft_isnumeric(char	*str);
 int		export(char **args, int ac, int fd);
 int		pwd(int args_count);
 int		unset(char **args);
-void	get_i_o(t_list *cmd, int *in, int *out, int fd[2], int first);
+int	get_i_o(t_list *cmd, int *in, int *out, int fd[2], int first);
 int		str_alnum(char *str);
 int    	ft_putenv(const char *string);
 void	set_exit(int status);
 char *ft_getenv(char *key);
 
+int		ret_error(char *str, int ret);
 #endif

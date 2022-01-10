@@ -96,7 +96,6 @@ int	main(int argc, char **argv, char **envir)
 		}
 		add_history(tmp);
 		free(tmp);
-		// ft_lstiter(pipes, &deb_print_pipe);
 		run_cmd(pipes);
 		ft_lstclear(&pipes, &free_pipe);
 	}

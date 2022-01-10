@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 23:30:23 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/10 00:13:37 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/10 11:45:47 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int execute_cmd(t_pipe *cmnd, int in, int out)
 	if (status == 127)
 	{
 		pid = fork();
+		if (pid < 0)
+			return(ret_error("FATAL ERROR", 1));
 		if (pid == 0)
 		{
 			redirect_io(in, out);
