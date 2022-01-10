@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 13:41:48 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/09 21:23:18 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/01/10 11:46:26 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	print_export(int fd[2])
 	exit(0);
 }
 
-void	sort_it(int	fd[2], int out)
+void	sort_it(int fd[2], int out)
 {
 	char **args;
 
@@ -54,27 +54,25 @@ void	sort_it(int	fd[2], int out)
 	ft_execvp("sort", args);
 }
 
-void	sort_export(int	out)
+int	sort_export(int out)
 {
 	int		fd[2];
 	int		pid;
 	int		id;
 
 	if (pipe(fd) == -1)
-		printf("e");
-		//error ;
+		return (ret_error("FATAL ERROR", 1));
 	pid = fork();
-	// if (pid < 0)
-	// 	printf("e");
-		//error;
+	if (pid < 0)
+		return(ret_error("FATAL ERROR", 1));
 	if (pid == 0)
 		print_export(fd);
 	else
 	{
 		waitpid(pid, NULL, 0);
 		id = fork();
-		// if (id < 0)
-			//error
+		if (id < 0)
+			return(ret_error("FATAL ERROR", 1));
 		if (id == 0)
 			sort_it(fd, out);
 		close(fd[0]);
