@@ -19,13 +19,25 @@ int	cd_err(char *arg)
 	return (1);
 }
 
+void	set_pwd(void)
+{
+	char	*cwd;
+	char	*toadd;
+
+	cwd = getcwd(NULL, 4096);
+	toadd = ft_strjoin("PWD=", cwd);
+	free(cwd);
+	ft_putenv(toadd);
+	free(toadd);
+}
+
 int	cd(char **args, int args_count)
 {
 	char	*home;
 
 	if (args_count == 0)
 	{
-		home = getenv("HOME");
+		home = ft_getenv("HOME");
 		if (!home || !(*home))
 		{
 			ft_putstr_fd("bash: cd: HOME not set\n", 2);
@@ -44,5 +56,6 @@ int	cd(char **args, int args_count)
 		ft_putstr_fd("cd: too many arguments\n", 2);
 		return (1);
 	}
+	set_pwd();
 	return (0);
 }

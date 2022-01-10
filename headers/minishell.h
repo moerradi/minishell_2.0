@@ -27,6 +27,8 @@
 # include <string.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <sys/wait.h>
+# include <sys/types.h>
 
 # define IGNORE_ALL		"$ \\'\"|~<>"
 # define DQUOTE_IGNORE	" '|~<>"
@@ -35,6 +37,8 @@
 # define R_APPEND		2
 # define R_READ			3
 # define R_STREAM		4
+
+extern char **g_env;
 
 typedef enum e_token {nontoken, s_in, s_out, d_in, d_out, dollar }t_token;
 
@@ -96,4 +100,8 @@ int		pwd(int args_count);
 int		unset(char **args);
 void	get_i_o(t_list *cmd, int *in, int *out, int fd[2], int first);
 int		str_alnum(char *str);
+int    	ft_putenv(const char *string);
+void	set_exit(int status);
+char *ft_getenv(char *key);
+
 #endif

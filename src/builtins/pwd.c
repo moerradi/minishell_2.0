@@ -27,8 +27,11 @@ int	pwd(int args_count)
 			ft_putstr_fd(strerror(err_tmp), 2);
 			ft_putstr_fd("\n", 2);
 		}
-		printf("%s\n", cwd);
-		free(cwd);
+		else
+		{
+			printf("%s\n", cwd);
+			free(cwd);
+		}
 	}
 	else
 		ft_putstr_fd("pwd: too many arguments\n", 2);

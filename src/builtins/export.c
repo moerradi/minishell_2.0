@@ -12,8 +12,6 @@
 
 #include "../../headers/minishell.h"
 
-extern char	**environ;
-
 int	export_error(char *av)
 {
 	ft_putstr_fd("3lash: export: '", 2);
@@ -29,12 +27,14 @@ void	print_export(int fd[2])
 
 	i = 0;
 	dup2(fd[1], 1);
-	while (environ[i])
+	while (g_env[i])
 	{
+		if (ft_strncmp(g_env[i], "?=", 2))
+			continue ;
 		j = 0;
-		while (environ[i][j] != '=' && environ[i][j])
-			printf("%c", environ[i][j++]);
-		printf("=\"%s\"\n", ft_strchr(environ[i], '=') + 1);
+		while (g_env[i][j] != '=' && g_env[i][j])
+			printf("%c", g_env[i][j++]);
+		printf("=\"%s\"\n", ft_strchr(g_env[i], '=') + 1);
 		i++;
 	}
 	close(fd[0]);

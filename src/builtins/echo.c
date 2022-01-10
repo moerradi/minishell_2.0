@@ -17,6 +17,11 @@ int	echo(char **args, int ac, int fd)
 	int	i;
 
 	i = 0;
+	if (ac == 0)
+	{
+		ft_putchar_fd('\n', fd);
+		return (0);
+	}
 	while (!ft_strcmp(args[i], "-n"))
 		i++;
 	while (i < ac - 1)
@@ -27,4 +32,5 @@ int	echo(char **args, int ac, int fd)
 	ft_putstr_fd(args[i], fd);
 	if (ft_strcmp(args[0], "-n"))
 		ft_putstr_fd("\n", fd);
+	return (0);
 }

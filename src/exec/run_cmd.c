@@ -65,17 +65,22 @@ int execute_cmd(t_pipe *cmnd, int in, int out)
 				{
 					ft_putstr_fd(cmnd->cmd, 2);
 					ft_putstr_fd(": command not found\n", 2);
+					status = 127;
 				}
 				else if (errno == EACCES)
 				{
 					ft_putstr_fd(cmnd->cmd, 2);
-					ft_putstr_fd(": command not found\n", 2);
+					ft_putstr_fd(": permission denied\n", 2);
+					status = 126;
 				}
 			}
-			exit(0);
+			exit(status);
 		}
 		else
-			pid = waitpid(pid, &status, WUNTRACED);
+		{
+			waitpid(pid, &status, 0);
+			status = WEXITSTATUS(status);
+		}
 	}
 	return (status);
 }
@@ -89,12 +94,13 @@ void	run_cmd(t_list *cmd)
 	int	first;
 
 	first = 1;
+	status = 0;
 	while (cmd!= NULL)
 	{
 		get_i_o(cmd, &in, &out, fd, first);
-		printf("in = %i\nout = %i\n", in, out);
 		if(((t_pipe *)cmd->content)->cmd)
 			status = execute_cmd((t_pipe *)cmd->content, in , out);
+		set_exit(status);
 		if (out != 1)
 			close(out);  
 		if (in != 0)

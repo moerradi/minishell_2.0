@@ -1,4 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/10 20:17:39 by moerradi          #+#    #+#             */
+/*   Updated: 2022/01/10 20:17:39 by moerradi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../headers/minishell.h"
+
+char **g_env;
+
+void	init_environ(char **envir)
+{
+	int	i;
+
+	i = 0;
+	while (envir[i])
+		i++;
+	g_env = (char **)malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	while (envir[i])
+	{
+		g_env[i] = ft_strdup(envir[i]);
+		i++;
+	}
+	g_env[i] = NULL;
+	set_exit(0);
+}
 
 char	*prompt(void)
 {
@@ -31,12 +63,13 @@ void	sig_handler(int sig)
 	}
 }
 
-int	main(int argc, char **argv, char **environ)
+int	main(int argc, char **argv, char **envir)
 {
 	char	*raw_line;
 	char	*tmp;
 	t_list	*pipes;
-
+	
+	init_environ(envir);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
 	while (1)

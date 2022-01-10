@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 20:09:08 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/08 09:57:28 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/10 18:47:26 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	*expand(char *str)
 	while (toks[i])
 	{
 		if (!ft_strcmp(toks[i], "$") && toks[i + 1] && toks[i + 1][0] > 0)
-			tmp = ft_strjoin(out, getenv(toks[++i]));
+			tmp = ft_strjoin(out, ft_getenv(toks[++i]));
 		else
 			tmp = ft_strjoin(out, toks[i]);
 		free(out);

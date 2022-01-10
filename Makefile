@@ -18,7 +18,7 @@ SRCS=./src/utils/debug_utils.c ./src/parsing/removechars.c \
 	./src/builtins/cd.c ./src/builtins/unset.c ./src/builtins/echo.c \
 	./src/builtins/export.c ./src/builtins/pwd.c ./src/builtins/env.c \
 	./src/exec/run_cmd.c ./src/exec/get_i_o.c ./src/exec/ft_execvp.c \
-	./src/main.c ./src/builtins/exit.c
+	./src/main.c ./src/builtins/exit.c ./src/exec/set_exit.c ./src/utils/ft_putenv.c
 NAME= minishell
 FLAGS= -Wall -Werror -Wextra
 LIBS = -lreadline

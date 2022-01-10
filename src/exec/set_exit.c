@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   set_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 14:52:04 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/09 20:14:56 by kdrissi-         ###   ########.fr       */
+/*   Created: 2022/01/10 01:15:10 by moerradi          #+#    #+#             */
+/*   Updated: 2022/01/10 22:09:00 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	env(int fd)
+void	set_exit(int status)
 {
-	int	i;
+	char	*toput;
+	char	*num;
 
-	i = 0;
-	while (g_env[i])
-	{
-		if (ft_strncmp(g_env[i], "?=", 2))
-		{
-			ft_putstr_fd(g_env[i], fd);
-			ft_putstr_fd("\n", fd);
-		}
-		i++;
-	}
-	return (0);
+	num = ft_itoa(status);
+	printf("num : %s %i\n", num, status);
+	
+	toput = ft_strjoin("?=", num);
+	free(num);
+	ft_putenv(toput);
+	free(toput);
 }

@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-extern char	**environ;
+#include "../../headers/minishell.h"
 
 static size_t	calc_move(const char *string, size_t *size)
 {
@@ -26,9 +24,9 @@ static size_t	calc_move(const char *string, size_t *size)
 	nlen = ft_strlen(name);
 	*size = 0;
 	r = 0;
-	while (environ[r] != NULL)
+	while (g_env[r] != NULL)
 	{
-		if (!ft_strncmp (environ[r], name, nlen) && environ[r][nlen] == '=')
+		if (!ft_strncmp (g_env[r], name, nlen) && g_env[r][nlen] == '=')
 			break ;
 		else
 			(*size)++;
@@ -38,23 +36,39 @@ static size_t	calc_move(const char *string, size_t *size)
 	return (r);
 }
 
+char *ft_getenv(char *key)
+{
+	int		i;
+	int		keylen;
+	char	*ret;
+
+	i = 0;
+	keylen = ft_strlen (key);	
+	while (g_env[i] != NULL)
+	{
+		if (!ft_strncmp (g_env[i], key, keylen) && g_env[i][keylen] == '=')
+		{
+			ret = ft_strchr(g_env[i], '=');
+			if (ret)
+				return (ret + 1);
+			else
+				return (NULL);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
 static void	create_new_env(size_t size)
 {
-	static char	**last_env = NULL;
 	char		**new_env;
 
 	new_env = (char **) malloc(sizeof(char *) * (size + 2));
-	if (last_env)
-	{
-		ft_memcpy((char *)new_env, (char *)last_env, size * sizeof(char *));
-		free(last_env);
-	}
-	else
-		ft_memcpy((char *) new_env, (char *)environ, size * sizeof(char *));
+	ft_memcpy((char *)new_env, (char *)g_env, size * sizeof(char *));
+	free(g_env);
 	new_env[size] = NULL;
 	new_env[size + 1] = NULL;
-	environ = new_env;
-	last_env = environ;
+	g_env = new_env;
 }
 
 int	ft_putenv(char const *string)
@@ -64,13 +78,13 @@ int	ft_putenv(char const *string)
 	size_t		move;
 	char		*np;
 
-	ep = environ;
+	ep = g_env;
 	move = calc_move(string, &size);
 	ep += move;
 	if (*ep == NULL)
 	{
 		create_new_env(size);
-		ep = environ + size;
+		ep = g_env + size;
 	}
 	else
 		free(*ep);

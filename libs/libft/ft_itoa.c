@@ -12,25 +12,28 @@
 
 #include "libft.h"
 
-static int	ternary(int condition, int if_true, int if_false)
-{
-	if (condition)
-		return (if_true);
-	else
-		return (if_false);
-}
-
 static size_t	ft_numlen(int n)
 {
 	size_t	len;
 
-	len = 0;
+	if (n > 0)
+		len = 0;
+	else
+		len = 1;
 	while (n)
 	{
 		n /= 10;
 		len++;
 	}
 	return (len);
+}
+
+static size_t	abs_size(int n)
+{
+	if (n > 0)
+		return (n);
+	else
+		return (n * -1);
 }
 
 char	*ft_itoa(int n)
@@ -40,14 +43,16 @@ char	*ft_itoa(int n)
 	size_t			i;
 	unsigned int	ntemp;
 
-	ntemp = ternary((n > 0), n, n * -1);
+	ntemp = abs_size(n);
 	i = 0;
 	numlen = ft_numlen(n);
-	numlen += ternary((n > 0), ft_numlen(n), ft_numlen(n) + 1);
 	out = malloc(sizeof(char) * (numlen + 1));
 	if (!out)
 		return (NULL);
-	out[0] = (char) ternary((n >= 0), '0', '-');
+	if (n >= 0)
+		out[0] = '0';
+	else
+		out[0] = '-';
 	while (ntemp)
 	{
 		out[numlen - i - 1] = (ntemp % 10) + '0';

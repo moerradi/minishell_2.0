@@ -12,65 +12,74 @@
 
 #include "libft.h"
 
-
-char    *free_ptr(char **buffer)
+char	*free_ptr(char **buffer)
 {
-    char *buff;
+	char	*buff;
 
-    buff = *buffer;
-    free(buff);
-    return (NULL);
+	buff = *buffer;
+	free(buff);
+	return (NULL);
 }
 
-char    *buffered_read(const int fd, char *rest)
+char	*buffered_read(const int fd, char *rest)
 {
-    int        read_ret;
-    char    *temp;
-    char    *buffer;
+	int		read_ret;
+	char	*temp;
+	char	*buffer;
 
-    if (fd < 0 || BUFFER_SIZE < 1 || !(buffer = malloc(sizeof(char) * \
-        (BUFFER_SIZE + 1))) || read(fd, buffer, 0) < 0)
-        return (NULL);
-    while (!ft_strchr_s(rest, '\n'))
-    {
-        temp = rest;
-        if ((read_ret = read(fd, buffer, BUFFER_SIZE)) < 0)
-            return (free_ptr(&buffer));
-        buffer[read_ret] = '\0';
-        rest = ft_strjoin(rest, buffer);
-        free(temp);
-        if (read_ret == 0 || *rest == '\0')
-            break ;
-    }
-    free(buffer);
-    return (rest);
+	if (fd < 0 || BUFFER_SIZE < 1)
+		return (NULL);
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer || read(fd, buffer, 0) < 0)
+		return (NULL);
+	while (!ft_strchr_s(rest, '\n'))
+	{
+		temp = rest;
+		read_ret = read(fd, buffer, BUFFER_SIZE);
+		if (!read_ret)
+			return (free_ptr(&buffer));
+		buffer[read_ret] = '\0';
+		rest = ft_strjoin(rest, buffer);
+		free(temp);
+		if (read_ret == 0 || *rest == '\0')
+			break ;
+	}
+	free(buffer);
+	return (rest);
 }
 
-int        get_next_line(int fd, char **line)
+int	handle_nonl(char	**line, char *rest)
 {
-    char            *temp;
-    static char        *rest[ULILMIT];
-    int                newline_pos;
+	*line = ft_strdup(rest);
+	if (!(*line))
+		return (-1);
+	free(rest);
+	rest = NULL;
+	return (0);
+}
 
-    if (!(rest[fd] = buffered_read(fd, rest[fd])))
-        return (-1);
-    if (((temp = ft_strchr_s(rest[fd], '\n'))))
-    {
-        newline_pos = temp - rest[fd];
-        temp = ft_strdup(temp + 1);
-        if (!temp || !(*line = ft_strndup(rest[fd], newline_pos)))
-            return (-1);
-        free(rest[fd]);
-        rest[fd] = ft_strdup(temp);
-        free(temp);
-        return (1);
-    }
-    else
-    {
-        if ((*line = ft_strdup(rest[fd])) == NULL)
-            return (-1);
-        free(rest[fd]);
-        rest[fd] = NULL;
-        return (0);
-    }
+int	get_next_line(int fd, char **line)
+{
+	char		*temp;
+	static char	*rest[ULILMIT];
+	int			newline_pos;
+
+	rest[fd] = buffered_read(fd, rest[fd]);
+	if (!rest[fd])
+		return (-1);
+	temp = ft_strchr_s(rest[fd], '\n');
+	if (temp)
+	{
+		newline_pos = temp - rest[fd];
+		temp = ft_strdup(temp + 1);
+		*line = ft_strndup(rest[fd], newline_pos);
+		if (!temp || !(*line))
+			return (-1);
+		free(rest[fd]);
+		rest[fd] = ft_strdup(temp);
+		free(temp);
+		return (1);
+	}
+	else
+		return (handle_nonl(line, rest[fd]));
 }

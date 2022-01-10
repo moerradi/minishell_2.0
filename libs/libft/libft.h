@@ -82,5 +82,4 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 char				**ft_split_rep(char const *s, char c, int rep);
 void				free_arr(char ***arr);
 int					count_len(char const *s, int start, char c);
-int    				ft_putenv(const char *string);
 #endif

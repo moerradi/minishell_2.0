@@ -24,7 +24,7 @@ int	ft_execvp(char *cmd, char **args)
 
 	if (ft_strchr(cmd, '/'))
 		return (execve(cmd, args, environ));
-	str = getenv("PATH");
+	str = ft_getenv("PATH");
 	all_paths = ft_split(str, ':');
 	i = 0;
 	while (all_paths[i])
