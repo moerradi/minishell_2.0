@@ -60,9 +60,7 @@ int	handle_d_i(t_redir *tmp)
 int	in_files(t_list *files)
 {
 	int		fd;
-	char	*line;
 	t_redir	*tmp;
-	int		pp[2];
 
 	fd = 0;
 	while (files != NULL)
@@ -81,7 +79,7 @@ int	in_files(t_list *files)
 	return (fd);
 }
 
-int	get_i_o(t_list *cmd, int *in, int *out, int fd[2], int first)
+void	get_i_o(t_list *cmd, int *in, int *out, int fd[2], int first)
 {
 	if (first)
 		*in = 0;
@@ -90,7 +88,7 @@ int	get_i_o(t_list *cmd, int *in, int *out, int fd[2], int first)
 	if(cmd->next)
 	{
 		if (pipe(fd) == -1)
-			return (ret_error("FATAL ERROR", 1));
+			return (ft_putendl_fd("IO error", 2));
 		*out = fd[1];
 	}
 	else
@@ -105,10 +103,4 @@ int	get_i_o(t_list *cmd, int *in, int *out, int fd[2], int first)
 		*out = out_files(((t_pipe *)cmd->content)->output_files);
 		close(fd[1]);
 	}
-}
-
-int		ret_error(char *str, int ret)
-{
-		ft_putendl_fd(str, 2);
-		return (ret);
 }

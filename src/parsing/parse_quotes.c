@@ -6,13 +6,13 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 01:58:08 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/09 00:20:42 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/01/11 00:48:04 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void	*handle_squote(bool *squote, char *out)
+void	handle_squote(bool *squote, char *out)
 {
 	if (*out == '\'')
 		*squote = false;
@@ -20,14 +20,14 @@ void	*handle_squote(bool *squote, char *out)
 		*out = *out * (-1);
 }
 
-void	*handle_escape(bool *escape, char *out)
+void	handle_escape(bool *escape, char *out)
 {
 	if (ft_strchr(IGNORE_ALL, *out))
 		*out = *out * (-1);
 	*escape = false;
 }
 
-void	*handle_dquote(bool *escape, bool *dquote, char *out)
+void	handle_dquote(bool *escape, bool *dquote, char *out)
 {
 	if (*out == '\\')
 	{
@@ -42,7 +42,7 @@ void	*handle_dquote(bool *escape, bool *dquote, char *out)
 		*out = *out * (-1);
 }
 
-void	*handle_normal(bool *squote, bool *dquote, bool *escape, char c)
+void	handle_normal(bool *squote, bool *dquote, bool *escape, char c)
 {
 	if (c == '\'')
 		*squote = true;

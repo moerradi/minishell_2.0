@@ -47,6 +47,40 @@ void redirect_io(int in, int out)
     }
 }
 
+int	exec_error(char *cmd)
+{
+	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd(cmd, 2);
+	if (is_dir(cmd))
+	{
+		ft_putstr_fd(": Is a directory\n", 2);
+		return (126);
+	}
+	if(errno == ENOENT)
+	{
+		ft_putstr_fd(": command not found\n", 2);
+		return (127);
+	}
+	else if (errno == EACCES)
+	{
+		ft_putstr_fd(": permission denied\n", 2);
+		return (126);
+	}
+	return (127);
+}
+
+// void	sighand(int sig)
+// {
+// 	if (sig == SIGINT)
+// 	{
+// 		printf("amd hisdas");
+// 		exit(130);
+// 	}
+// 	else if (sig == SIGQUIT)
+// 	{
+// 	}
+// }
+
 int execute_cmd(t_pipe *cmnd, int in, int out)
 {
 	int pid;
@@ -63,25 +97,14 @@ int execute_cmd(t_pipe *cmnd, int in, int out)
 			redirect_io(in, out);
 			if (ft_execvp(cmnd->cmd, cmnd->args) == -1)
 			{
-				if(errno == ENOENT)
-				{
-					ft_putstr_fd(cmnd->cmd, 2);
-					ft_putstr_fd(": command not found\n", 2);
-					status = 127;
-				}
-				else if (errno == EACCES)
-				{
-					ft_putstr_fd(cmnd->cmd, 2);
-					ft_putstr_fd(": permission denied\n", 2);
-					status = 126;
-				}
+				status = exec_error(cmnd->cmd);
+				exit(status);
 			}
-			exit(status);
 		}
 		else
 		{
 			waitpid(pid, &status, 0);
-			status = WEXITSTATUS(status);
+			status = get_status(status);
 		}
 	}
 	return (status);

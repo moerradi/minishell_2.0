@@ -35,4 +35,5 @@ int	pwd(int args_count)
 	}
 	else
 		ft_putstr_fd("pwd: too many arguments\n", 2);
+	return (0);
 }

@@ -61,22 +61,12 @@ static void	handle_redir(t_pipe *pipe, t_token t, char *str)
 		ft_lstadd_back(&pipe->output_files, node);
 }
 
-static void	handle_expand(t_pipe *pipe, char *str, t_list **tmp)
-{
-	char	*tptr;
-
-	tptr = expand_str(str);
-	parsing_helper(pipe, tptr, tmp);
-	free(tptr);
-}
-
 t_pipe	*parse_tokens(char **tokens)
 {
 	int		i;
 	t_token	t;
 	t_pipe	*out;
 	t_list	*tmp;
-	char	*tptr;
 
 	i = 0;
 	tmp = NULL;

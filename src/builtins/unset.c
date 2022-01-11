@@ -12,8 +12,6 @@
 
 #include "../../headers/minishell.h"
 
-extern char	**environ;
-
 int	unset_error(char *av)
 {
 	ft_putstr_fd("3lash: unset: '", 2);
@@ -22,7 +20,7 @@ int	unset_error(char *av)
 	return (1);
 }
 
-int	unset_one(char *arg)
+void	unset_one(char *arg)
 {
 	int		len;
 	char	**ptr;
@@ -30,11 +28,11 @@ int	unset_one(char *arg)
 
 	len = ft_strlen(arg);
 	i = 0;
-	while (environ[i])
+	while (g_env[i])
 	{
-		if (!ft_strncmp(environ[i], arg, len) && environ[i][len] == '=')
+		if (!ft_strncmp(g_env[i], arg, len) && g_env[i][len] == '=')
 		{
-			ptr = &environ[i];
+			ptr = &g_env[i];
 			while (*ptr)
 			{
 				ptr[0] = ptr[1];

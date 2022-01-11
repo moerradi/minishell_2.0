@@ -98,11 +98,14 @@ bool	ft_isnumeric(char	*str);
 int		export(char **args, int ac, int fd);
 int		pwd(int args_count);
 int		unset(char **args);
-int	get_i_o(t_list *cmd, int *in, int *out, int fd[2], int first);
+void	get_i_o(t_list *cmd, int *in, int *out, int fd[2], int first);
 int		str_alnum(char *str);
 int    	ft_putenv(const char *string);
 void	set_exit(int status);
-char *ft_getenv(char *key);
-
+char	*ft_getenv(char *key);
 int		ret_error(char *str, int ret);
+int		is_dir(const char *path);
+void	ascii_art(void);
+int		get_status(int status);
+
 #endif

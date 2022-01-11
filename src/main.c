@@ -12,7 +12,7 @@
 
 #include "../headers/minishell.h"
 
-char **g_env;
+char	**g_env;
 
 void	init_environ(char **envir)
 {
@@ -47,56 +47,75 @@ char	*prompt(void)
 	return (out);
 }
 
-void	sig_handler(int sig)
+void	sig_handler(int sig, siginfo_t *info, void* ucontext)
 {
+	(void)ucontext;
 	if (sig == SIGINT)
 	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		if (info->si_pid != 0)
+		{
+			set_exit(130);
+			printf("\n");
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
+		else
+			kill(0, SIGINT);
 	}
 	else if (sig == SIGQUIT)
 	{
-		if (ft_strcmp(rl_line_buffer, ""))
-			exit(131);
+		if (info->si_pid != 0)
+		{
+			if (!ft_strcmp(rl_line_buffer, ""))
+				exit(131);
+		}
+		else
+			kill(0, SIGQUIT);
 	}
 }
-
-int	main(int argc, char **argv, char **envir)
+void	loop()
 {
 	char	*raw_line;
 	char	*tmp;
 	t_list	*pipes;
-	
-	init_environ(envir);
-	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
+
 	while (1)
 	{
 		tmp = prompt();
 		raw_line = ft_strtrim(tmp, " \t");
 		if (!tmp)
-		{
-			rl_clear_history();
 			exit(0);
-		}
-		if (!(*raw_line))
-		{
-			free(raw_line);
-			free(tmp);
-			continue ;
-		}
-		pipes = parse(raw_line);
+		if (*raw_line)
+			pipes = parse(raw_line);
+		if (!pipes && *raw_line)
+			ft_putstr_fd("Parse error !\n", 2);
 		free(raw_line);
-		if (!pipes)
-		{
-			printf("Parse error\n");
-			continue ;
-		}
 		add_history(tmp);
 		free(tmp);
 		run_cmd(pipes);
 		ft_lstclear(&pipes, &free_pipe);
 	}
+}
+int	main(int argc, char **argv, char **envir)
+{
+	struct sigaction sig;
+
+	(void)argc;
+	(void)argv;
+	ascii_art();
+	init_environ(envir);
+	sig.sa_flags = SA_SIGINFO;
+	sig.sa_sigaction = sig_handler;
+	if (sigaction(SIGINT, &sig, NULL) == -1)
+	{
+		ft_putstr_fd("fatal error\n", 2);
+		exit(128);
+	}
+	if (sigaction(SIGQUIT, &sig, NULL) == -1)
+	{
+		ft_putstr_fd("fatal error\n", 2);
+		exit(128);
+	}
+	loop();
 }

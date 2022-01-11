@@ -14,7 +14,7 @@
 
 int	export_error(char *av)
 {
-	ft_putstr_fd("3lash: export: '", 2);
+	ft_putstr_fd("bash: export: '", 2);
 	ft_putstr_fd(av, 2);
 	ft_putstr_fd("' :not a valid identifier\n", 2);
 	return (1);
@@ -44,7 +44,7 @@ void	print_export(int fd[2])
 
 void	sort_it(int fd[2], int out)
 {
-	char **args;
+	char	**args;
 
 	args = ft_split("sort ", ' ');
 	dup2(fd[0], 0);
@@ -64,7 +64,7 @@ int	sort_export(int out)
 		return (ret_error("FATAL ERROR", 1));
 	pid = fork();
 	if (pid < 0)
-		return(ret_error("FATAL ERROR", 1));
+		return (ret_error("FATAL ERROR", 1));
 	if (pid == 0)
 		print_export(fd);
 	else
@@ -72,13 +72,14 @@ int	sort_export(int out)
 		waitpid(pid, NULL, 0);
 		id = fork();
 		if (id < 0)
-			return(ret_error("FATAL ERROR", 1));
+			return (ret_error("FATAL ERROR", 1));
 		if (id == 0)
 			sort_it(fd, out);
 		close(fd[0]);
 		close(fd[1]);
 		waitpid(id, NULL, 0);
 	}
+	return (0);
 }
 
 int	export(char **args, int ac, int fd)
@@ -89,7 +90,7 @@ int	export(char **args, int ac, int fd)
 	i = 0;
 	out = 0;
 	if (ac == 0)
-		sort_export(fd);
+		return (sort_export(fd));
 	else
 	{
 		while (args[i] != NULL)
