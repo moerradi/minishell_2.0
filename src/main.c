@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 20:17:39 by moerradi          #+#    #+#             */
-/*   Updated: 2022/02/05 19:52:10 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/02/05 20:01:22 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	init_environ(char **envir)
 		g_env[i + 3] = ft_strdup(envir[i]);
 		i++;
 	}
-	g_env[i] = NULL;
+	g_env[i + 3] = NULL;
 }
 
 char	*prompt(void)
