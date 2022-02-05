@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 20:17:39 by moerradi          #+#    #+#             */
-/*   Updated: 2022/02/05 17:47:07 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/02/05 18:08:52 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	sig_handler(int sig)
 	{
 		if (!f)
 		{
+			ft_putstr_fd("\r\r", 1);
 			rl_on_new_line();
 			rl_redisplay();
 		}
@@ -106,6 +107,7 @@ int	main(int argc, char **argv, char **envir)
 {
 	(void)argc;
 	(void)argv;
+	reset_terminal();
 	ascii_art();
 	init_environ(envir);
 	if (signal(SIGINT, sig_handler) == SIG_ERR)

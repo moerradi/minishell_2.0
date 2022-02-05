@@ -6,7 +6,7 @@
 #    By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/16 12:50:49 by kdrissi-          #+#    #+#              #
-#    Updated: 2022/02/05 17:04:53 by moerradi         ###   ########.fr        #
+#    Updated: 2022/02/05 17:52:22 by moerradi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,12 @@ all: $(NAME)
 $(NAME): $(SRCS)
 		make -C ./libs/libft
 		make -C ./libs/libft bonus
-		gcc $(FLAGS) $(ANTILEAKS) $(SRCS) $(LIBFT) -o $(NAME) $(LIBS)
+		gcc $(FLAGS) $(SRCS) $(LIBFT) -o $(NAME) $(LIBS)
+
+sanitize: $(SRCS)
+	make -C ./libs/libft
+	make -C ./libs/libft bonus
+	gcc $(FLAGS) $(ANTILEAKS) $(SRCS) $(LIBFT) -o $(NAME) $(LIBS) $(ANTILEAKS)
 
 clean:
 		make -C ./libs/libft clean
