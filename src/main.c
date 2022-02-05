@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 20:17:39 by moerradi          #+#    #+#             */
-/*   Updated: 2022/02/05 19:02:45 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:52:10 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,17 @@ void	init_environ(char **envir)
 	i = 0;
 	while (envir[i])
 		i++;
-	g_env = (char **)malloc(sizeof(char *) * (i + 1));
+	g_env = (char **)malloc(sizeof(char *) * (i + 4));
+	g_env[0] = ft_strdup("?=0");
+	g_env[1] = ft_strdup("-flag=0");
+	g_env[2] = ft_strdup("-screen=0");
 	i = 0;
 	while (envir[i])
 	{
-		g_env[i] = ft_strdup(envir[i]);
+		g_env[i + 3] = ft_strdup(envir[i]);
 		i++;
 	}
 	g_env[i] = NULL;
-	set_exit(0);
 }
 
 char	*prompt(void)
@@ -109,7 +111,6 @@ int	main(int argc, char **argv, char **envir)
 	(void)argc;
 	(void)argv;
 	init_environ(envir);
-	ft_putenv("-screen=0");
 	reset_terminal();
 	ascii_art();
 	if (signal(SIGINT, sig_handler) == SIG_ERR)

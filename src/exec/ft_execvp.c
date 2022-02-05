@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 20:43:51 by moerradi          #+#    #+#             */
-/*   Updated: 2022/02/04 21:12:55 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:53:59 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_execvp(char *cmd, char **args)
 		path = ft_strjoin(all_paths[i], tmp);
 		free(tmp);
 		free(all_paths[i]);
-		execve(path, args, g_env);
+		execve(path, args, g_env + 3);
 		free(path);
 		i++;
 	}

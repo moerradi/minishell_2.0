@@ -6,17 +6,15 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 18:22:05 by moerradi          #+#    #+#             */
-/*   Updated: 2022/02/05 19:01:49 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:30:00 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-extern char	**environ;
-
 int	is_builtin(t_pipe *cmnd, int fd)
 {
-	if (!ft_strcmp(cmnd->cmd, "top"))
+	if (!ft_strcmp(cmnd->cmd, "top") || ft_strcmp(cmnd->cmd, "man"))
 		ft_putenv("-screen=1");
 	if (!ft_strcmp(cmnd->cmd, "echo"))
 		return (ft_echo(cmnd->args + 1, cmnd->ac - 1, fd));

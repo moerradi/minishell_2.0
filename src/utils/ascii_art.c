@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 00:36:13 by moerradi          #+#    #+#             */
-/*   Updated: 2022/02/04 23:25:42 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:12:17 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ void	ascii_art(void)
 	printf("| '_ ` _ \\| | '_ \\| / __| '_ \\ / _ \\ | |\n");
 	printf("| | | | | | | | | | \\__ \\ | | |  __/ | |\n");
 	printf("|_| |_| |_|_|_| |_|_|___/_| |_|\\___|_|_|\n");
-	printf("made with love by: kawkab🪐 and Moe.\n");
+	printf("made with love by: 🌟kawkab and 🔭Moe.\n");
 }
