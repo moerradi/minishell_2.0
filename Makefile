@@ -6,7 +6,7 @@
 #    By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/16 12:50:49 by kdrissi-          #+#    #+#              #
-#    Updated: 2022/02/04 21:58:24 by moerradi         ###   ########.fr        #
+#    Updated: 2022/02/05 17:04:53 by moerradi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,11 +19,11 @@ SRCS=./src/utils/debug_utils.c ./src/parsing/removechars.c				\
 	./src/builtins/export.c ./src/builtins/pwd.c ./src/builtins/env.c	\
 	./src/exec/run_cmd.c ./src/exec/get_i_o.c ./src/exec/ft_execvp.c	\
 	./src/main.c ./src/builtins/exit.c ./src/utils/ft_putenv.c			\
-	./src/utils/exec_utils.c ./src/utils/ascii_art.c
+	./src/utils/exec_utils.c ./src/utils/ascii_art.c ./src/utils/termcaps.c
 
 NAME= minishell
 FLAGS= -Wall -Werror -Wextra
-LIBS = -lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
+LIBS = -lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include -ltermcap
 LIBFT = ./libs/libft/libft.a
 ANTILEAKS= -fsanitize=address
 

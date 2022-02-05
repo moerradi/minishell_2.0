@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 20:17:39 by moerradi          #+#    #+#             */
-/*   Updated: 2022/02/04 23:28:20 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/02/05 17:47:07 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	sig_handler(int sig)
 			rl_on_new_line();
 			rl_redisplay();
 		}
+		else
+			reset_terminal();
 	}
 }
 
@@ -79,6 +81,7 @@ void	loop(void)
 	char	*tmp;
 	t_list	*pipes;
 
+	pipes = NULL;
 	while (1)
 	{
 		ft_putenv("-flag=0");
@@ -91,7 +94,8 @@ void	loop(void)
 		if (!pipes && *raw_line)
 			ft_putstr_fd("Parse error !\n", 2);
 		free(raw_line);
-		add_history(tmp);
+		if (*tmp)
+			add_history(tmp);
 		free(tmp);
 		run_cmd(pipes);
 		ft_lstclear(&pipes, &free_pipe);

@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:16:44 by moerradi          #+#    #+#             */
-/*   Updated: 2022/02/04 23:29:37 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/02/05 17:04:20 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/types.h>
+# include <curses.h>
+# include <term.h>
+# include <termios.h>
 
 # define IGNORE_ALL		"$ \\'\"|~<>"
 # define DQUOTE_IGNORE	" '|~<>"
@@ -56,7 +59,7 @@ typedef struct s_pipe
 	int		ac;
 	char	**args;
 }			t_pipe;
-
+//parsing
 void	fix_token(char *str);
 t_redir	*redir_new(char *path, t_token mode);
 t_pipe	*init_pipe(void);
@@ -90,7 +93,7 @@ int		in_files(t_list *files);
 void	run_cmd(t_list *cmd);
 // builtins
 int		cd(char **args, int args_count);
-int		echo(char **args, int ac, int fd);
+int		ft_echo(char **args, int ac, int fd);
 int		env(int fd);
 int		bash_exit(char **args, int ac);
 bool	ft_isnumeric(char	*str);
@@ -106,5 +109,7 @@ int		ret_error(char *str, int ret);
 int		is_dir(const char *path);
 void	ascii_art(void);
 int		get_status(int status);
+//terminfo
+void	reset_terminal(void);
 
 #endif

@@ -1,37 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   termcaps.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 12:20:30 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/02/05 14:33:19 by moerradi         ###   ########.fr       */
+/*   Created: 2022/02/05 17:01:40 by moerradi          #+#    #+#             */
+/*   Updated: 2022/02/05 17:46:31 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	ft_echo(char **args, int ac, int fd)
+int	ft_putchar_int(int c)
 {
-	int	i;
-
-	i = 0;
-	if (ac == 0)
-	{
-		ft_putchar_fd('\n', fd);
-		return (0);
-	}
-	while (args[i] && !ft_strcmp(args[i], "-n"))
-		i++;
-	while (i < ac - 1)
-	{
-		ft_putstr_fd(args[i++], fd);
-		ft_putstr_fd(" ", fd);
-	}
-	if (i != ac)
-		ft_putstr_fd(args[i], fd);
-	if (ft_strcmp(args[0], "-n"))
-		ft_putstr_fd("\n", fd);
+	write(1, &c, 1);
 	return (0);
+}
+
+void	reset_terminal(void)
+{
+	struct termios	new;
+
+	tcgetattr(STDIN_FILENO, &new);
+	new.c_iflag = 27394;
+	new.c_oflag = 3;
+	new.c_cflag = 19200;
+	new.c_lflag = 536872399;
+	new.c_ispeed = 38400;
+	new.c_ospeed = 38400;
+	tputs(tgetstr("te", NULL), 0, ft_putchar_int);
+	tcsetattr(STDIN_FILENO, TCSANOW, &new);
 }

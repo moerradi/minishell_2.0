@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtok.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 02:07:40 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/08 22:35:24 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/02/05 17:47:21 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@ static int	space_len(char *str, const char *set)
 	return (len);
 }
 
+static void	handle_double_tok(char *out, char *str, int *i, int *j)
+{
+	out[(*i)++] = ' ';
+	out[(*i)++] = str[(*j)++];
+	out[(*i)++] = str[(*j)++];
+	out[(*i)++] = ' ';
+}
+
 static char	*spacify(char *str, const char *set, int len)
 {
 	char	*out;
@@ -47,12 +55,7 @@ static char	*spacify(char *str, const char *set, int len)
 	while (i < len)
 	{
 		if (ft_strchr(set, str[j]) && str[j] == str[j + 1])
-		{
-			out[i++] = ' ';
-			out[i++] = str[j++];
-			out[i++] = str[j++];
-			out[i++] = ' ';
-		}
+			handle_double_tok(out, str, &i, &j);
 		else if (ft_strchr(set, str[j]))
 		{
 			out[i++] = ' ';
