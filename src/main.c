@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 20:17:39 by moerradi          #+#    #+#             */
-/*   Updated: 2022/02/05 18:08:52 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:02:45 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	loop(void)
 	while (1)
 	{
 		ft_putenv("-flag=0");
+		ft_putenv("-screen=0");
 		tmp = prompt();
 		raw_line = ft_strtrim(tmp, " \t");
 		if (!tmp)
@@ -107,9 +108,10 @@ int	main(int argc, char **argv, char **envir)
 {
 	(void)argc;
 	(void)argv;
+	init_environ(envir);
+	ft_putenv("-screen=0");
 	reset_terminal();
 	ascii_art();
-	init_environ(envir);
 	if (signal(SIGINT, sig_handler) == SIG_ERR)
 	{
 		ft_putstr_fd("fatal error\n", 2);
