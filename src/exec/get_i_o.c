@@ -1,18 +1,16 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   get_i_o.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/06 19:43:19 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/09 03:51:44 by kdrissi-         ###   ########.fr       */
+/*   Created: 2022/02/04 21:13:04 by moerradi          #+#    #+#             */
+/*   Updated: 2022/02/04 23:23:36 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
-
-extern char	**environ;
 
 int	out_files(t_list *files)
 {
@@ -79,13 +77,9 @@ int	in_files(t_list *files)
 	return (fd);
 }
 
-void	get_i_o(t_list *cmd, int *in, int *out, int fd[2], int first)
+void	get_i_o(t_list *cmd, int *in, int *out, int fd[2])
 {
-	if (first)
-		*in = 0;
-	else
-		*in = fd[0];
-	if(cmd->next)
+	if (cmd->next)
 	{
 		if (pipe(fd) == -1)
 			return (ft_putendl_fd("IO error", 2));
@@ -94,13 +88,7 @@ void	get_i_o(t_list *cmd, int *in, int *out, int fd[2], int first)
 	else
 		*out = 1;
 	if (((t_pipe *)cmd->content)->input_files)
-	{
 		*in = in_files(((t_pipe *)cmd->content)->input_files);
-		close(fd[0]);
-	}
-	if(((t_pipe *)cmd->content)->output_files)
-	{
+	if (((t_pipe *)cmd->content)->output_files)
 		*out = out_files(((t_pipe *)cmd->content)->output_files);
-		close(fd[1]);
-	}
 }

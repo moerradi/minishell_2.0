@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 18:23:48 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/09 04:18:29 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/02/04 23:26:53 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ static size_t	calc_move(const char *string, size_t *size)
 	return (r);
 }
 
-char *ft_getenv(char *key)
+char	*ft_getenv(char *key)
 {
 	int		i;
 	int		keylen;
 	char	*ret;
 
 	i = 0;
-	keylen = ft_strlen (key);	
+	keylen = ft_strlen (key);
 	while (g_env[i] != NULL)
 	{
 		if (!ft_strncmp (g_env[i], key, keylen) && g_env[i][keylen] == '=')

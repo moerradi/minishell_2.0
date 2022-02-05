@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   general_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 19:07:46 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/10 00:32:08 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/02/04 23:27:00 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	str_alnum(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (!ft_isalnum(str[i]) && str[i] != '=')
+		if (!ft_isalnum(str[i]) && str[i] != '=' && str[i] != '_')
 			return (1);
 		i++;
 	}

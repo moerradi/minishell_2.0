@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 14:52:04 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/09 20:14:56 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/02/04 16:57:57 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	env(int fd)
 	i = 0;
 	while (g_env[i])
 	{
-		if (ft_strncmp(g_env[i], "?=", 2))
+		if (g_env[i][0] != '?' && g_env[i][0] != '-')
 		{
 			ft_putstr_fd(g_env[i], fd);
 			ft_putstr_fd("\n", fd);

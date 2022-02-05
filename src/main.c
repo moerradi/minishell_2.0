@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 20:17:39 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/10 20:17:39 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/02/04 23:28:20 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,34 +47,33 @@ char	*prompt(void)
 	return (out);
 }
 
-void	sig_handler(int sig, siginfo_t *info, void* ucontext)
+void	sig_handler(int sig)
 {
-	(void)ucontext;
+	int	f;
+
+	f = ft_atoi(ft_getenv("-flag"));
 	if (sig == SIGINT)
 	{
-		if (info->si_pid != 0)
+		if (!f)
 		{
-			set_exit(130);
+			set_exit(1);
 			printf("\n");
 			rl_on_new_line();
 			rl_replace_line("", 0);
 			rl_redisplay();
 		}
-		else
-			kill(0, SIGINT);
 	}
 	else if (sig == SIGQUIT)
 	{
-		if (info->si_pid != 0)
+		if (!f)
 		{
-			if (!ft_strcmp(rl_line_buffer, ""))
-				exit(131);
+			rl_on_new_line();
+			rl_redisplay();
 		}
-		else
-			kill(0, SIGQUIT);
 	}
 }
-void	loop()
+
+void	loop(void)
 {
 	char	*raw_line;
 	char	*tmp;
@@ -82,6 +81,7 @@ void	loop()
 
 	while (1)
 	{
+		ft_putenv("-flag=0");
 		tmp = prompt();
 		raw_line = ft_strtrim(tmp, " \t");
 		if (!tmp)
@@ -97,22 +97,19 @@ void	loop()
 		ft_lstclear(&pipes, &free_pipe);
 	}
 }
+
 int	main(int argc, char **argv, char **envir)
 {
-	struct sigaction sig;
-
 	(void)argc;
 	(void)argv;
 	ascii_art();
 	init_environ(envir);
-	sig.sa_flags = SA_SIGINFO;
-	sig.sa_sigaction = sig_handler;
-	if (sigaction(SIGINT, &sig, NULL) == -1)
+	if (signal(SIGINT, sig_handler) == SIG_ERR)
 	{
 		ft_putstr_fd("fatal error\n", 2);
 		exit(128);
 	}
-	if (sigaction(SIGQUIT, &sig, NULL) == -1)
+	if (signal(SIGQUIT, sig_handler) == SIG_ERR)
 	{
 		ft_putstr_fd("fatal error\n", 2);
 		exit(128);

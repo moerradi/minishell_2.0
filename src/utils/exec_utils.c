@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 00:07:02 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/11 05:01:24 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/02/04 23:25:31 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,18 @@ void	set_exit(int status)
 	free(toput);
 }
 
-int		ret_error(char *str, int ret)
+int	ret_error(char *str, int ret)
 {
-		ft_putendl_fd(str, 2);
-		return (ret);
+	ft_putendl_fd(str, 2);
+	return (ret);
 }
 
 int	get_status(int status)
 {
 	int	ret;
+
 	if (WIFEXITED(status))
-	{
 		ret = WEXITSTATUS(status);
-	}
-		
 	if (WIFSIGNALED(status))
 	{
 		ret = WTERMSIG(status);
@@ -47,11 +45,11 @@ int	get_status(int status)
 	return (ret);
 }
 
-int is_dir(const char *path)
+int	is_dir(const char *path)
 {
-   struct stat statbuf;
+	struct stat	statbuf;
 
-   if (stat(path, &statbuf) != 0)
-       return 0;
-   return S_ISDIR(statbuf.st_mode);
+	if (stat(path, &statbuf) != 0)
+		return (0);
+	return (S_ISDIR(statbuf.st_mode));
 }

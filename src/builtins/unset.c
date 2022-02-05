@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 13:09:08 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/06 23:51:16 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/02/04 21:00:39 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	is_str_alnum(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (!ft_isalnum(str[i]))
+		if (!ft_isalnum(str[i]) && str[i] != '_')
 			return (1);
 		i++;
 	}
@@ -66,12 +66,12 @@ int	unset(char **args)
 	out = 0;
 	while (args[i] != NULL)
 	{
-		if (!ft_isalpha(args[i][0]))
+		if (!ft_isalpha(args[i][0]) && args[i][0] != '_')
 			out = unset_error(args[i]);
 		else if (is_str_alnum(args[i]))
 			out = unset_error(args[i]);
-		else if (ft_strchr(args[i], '='))
-			unset_one(args[i++]);
+		else
+			unset_one(args[i]);
 		i++;
 	}
 	return (out);

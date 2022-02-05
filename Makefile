@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+         #
+#    By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/16 12:50:49 by kdrissi-          #+#    #+#              #
-#    Updated: 2022/01/08 23:08:32 by kdrissi-         ###   ########.fr        #
+#    Updated: 2022/02/04 21:58:24 by moerradi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS=./src/utils/debug_utils.c ./src/parsing/removechars.c				\
 
 NAME= minishell
 FLAGS= -Wall -Werror -Wextra
-LIBS = -lreadline
+LIBS = -lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
 LIBFT = ./libs/libft/libft.a
 ANTILEAKS= -fsanitize=address
 

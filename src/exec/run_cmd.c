@@ -3,48 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   run_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/01 23:30:23 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/10 11:45:47 by kdrissi-         ###   ########.fr       */
+/*   Created: 2022/02/04 18:22:05 by moerradi          #+#    #+#             */
+/*   Updated: 2022/02/04 23:21:20 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-extern char **environ;
+extern char	**environ;
 
-
-int		is_builtin(t_pipe *cmnd, int fd)
+int	is_builtin(t_pipe *cmnd, int fd)
 {
 	if (!ft_strcmp(cmnd->cmd, "echo"))
 		return (echo(cmnd->args + 1, cmnd->ac - 1, fd));
-	else if (!ft_strcmp(cmnd->cmd,"cd"))
+	else if (!ft_strcmp(cmnd->cmd, "cd"))
 		return (cd(cmnd->args + 1, cmnd->ac - 1));
-	else if (!ft_strcmp(cmnd->cmd,"env"))
-		return(env(fd));
-	else if (!ft_strcmp(cmnd->cmd,"unset"))
-		return(unset(cmnd->args + 1));
-	else if (!ft_strcmp(cmnd->cmd,"pwd"))
-		return(pwd(cmnd->ac - 1));
-	else if (!ft_strcmp(cmnd->cmd,"exit"))
-		return(bash_exit(cmnd->args + 1, cmnd->ac - 1));
-	else if (!ft_strcmp(cmnd->cmd,"export"))
-		return(export(cmnd->args + 1, cmnd->ac - 1, fd));
+	else if (!ft_strcmp(cmnd->cmd, "env"))
+		return (env(fd));
+	else if (!ft_strcmp(cmnd->cmd, "unset"))
+		return (unset(cmnd->args + 1));
+	else if (!ft_strcmp(cmnd->cmd, "pwd"))
+		return (pwd(cmnd->ac - 1));
+	else if (!ft_strcmp(cmnd->cmd, "exit"))
+		return (bash_exit(cmnd->args + 1, cmnd->ac - 1));
+	else if (!ft_strcmp(cmnd->cmd, "export"))
+		return (export(cmnd->args + 1, cmnd->ac - 1, fd));
 	else
 		return (127);
 }
 
-void redirect_io(int in, int out)
+void	redirect_io(int in, int out)
 {
-    if (in != 0)
-        dup2(in, 0);
-    if (out != 1)
-    {
-        dup2(out, 1);
+	if (in != 0)
+		dup2(in, 0);
+	if (out != 1)
+	{
+		dup2(out, 1);
 		if (in != 0)
-        	close(in);
-    }
+			close(in);
+	}
 }
 
 int	exec_error(char *cmd)
@@ -56,7 +55,7 @@ int	exec_error(char *cmd)
 		ft_putstr_fd(": Is a directory\n", 2);
 		return (126);
 	}
-	if(errno == ENOENT)
+	if (errno == ENOENT)
 	{
 		ft_putstr_fd(": command not found\n", 2);
 		return (127);
@@ -69,37 +68,25 @@ int	exec_error(char *cmd)
 	return (127);
 }
 
-// void	sighand(int sig)
-// {
-// 	if (sig == SIGINT)
-// 	{
-// 		printf("amd hisdas");
-// 		exit(130);
-// 	}
-// 	else if (sig == SIGQUIT)
-// 	{
-// 	}
-// }
-
-int execute_cmd(t_pipe *cmnd, int in, int out)
+int	execute_cmd(t_pipe *cmnd, int in, int out)
 {
-	int pid;
-	int status = 127;
+	int		pid;
+	int		status;
 
 	status = is_builtin(cmnd, out);
 	if (status == 127)
 	{
+		ft_putenv("-flag=1");
 		pid = fork();
 		if (pid < 0)
-			return(ret_error("FATAL ERROR", 1));
+			return (ret_error("FATAL ERROR", 1));
 		if (pid == 0)
 		{
+			if (in == -1)
+				exit(1);
 			redirect_io(in, out);
 			if (ft_execvp(cmnd->cmd, cmnd->args) == -1)
-			{
-				status = exec_error(cmnd->cmd);
-				exit(status);
-			}
+				exit(exec_error(cmnd->cmd));
 		}
 		else
 		{
@@ -114,20 +101,24 @@ void	run_cmd(t_list *cmd)
 {
 	int	fd[2];
 	int	in;
-	int out;
-	int status;
+	int	out;
+	int	status;
 	int	first;
 
 	first = 1;
 	status = 0;
-	while (cmd!= NULL)
+	while (cmd != NULL)
 	{
-		get_i_o(cmd, &in, &out, fd, first);
-		if(((t_pipe *)cmd->content)->cmd)
-			status = execute_cmd((t_pipe *)cmd->content, in , out);
+		if (first)
+			in = 0;
+		else
+			in = fd[0];
+		get_i_o(cmd, &in, &out, fd);
+		if (((t_pipe *)cmd->content)->cmd)
+			status = execute_cmd((t_pipe *)cmd->content, in, out);
 		set_exit(status);
 		if (out != 1)
-			close(out);  
+			close(out);
 		if (in != 0)
 			close(in);
 		first = 0;

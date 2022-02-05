@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 13:41:48 by kdrissi-          #+#    #+#             */
-/*   Updated: 2022/01/10 11:46:26 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/02/04 20:04:15 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,13 @@ void	print_export(int fd[2])
 	dup2(fd[1], 1);
 	while (g_env[i])
 	{
-		if (ft_strncmp(g_env[i], "?=", 2))
+		if (g_env[i][0] == '?' || g_env[i][0] == '-')
+		{
+			i++;
 			continue ;
+		}
 		j = 0;
+		printf("declare -x ");
 		while (g_env[i][j] != '=' && g_env[i][j])
 			printf("%c", g_env[i][j++]);
 		printf("=\"%s\"\n", ft_strchr(g_env[i], '=') + 1);
@@ -95,7 +99,7 @@ int	export(char **args, int ac, int fd)
 	{
 		while (args[i] != NULL)
 		{
-			if (!ft_isalpha(args[i][0]))
+			if (!ft_isalpha(args[i][0]) && args[i][0] != '_')
 				out = export_error(args[i]);
 			else if (str_alnum(args[i]))
 				out = export_error(args[i]);

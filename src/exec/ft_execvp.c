@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execvp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 20:43:51 by moerradi          #+#    #+#             */
-/*   Updated: 2022/01/10 00:18:27 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2022/02/04 21:12:55 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
-
-extern char **environ;
 
 int	ft_execvp(char *cmd, char **args)
 {
@@ -23,7 +21,7 @@ int	ft_execvp(char *cmd, char **args)
 	int			i;
 
 	if (ft_strchr(cmd, '/'))
-		return (execve(cmd, args, environ));
+		return (execve(cmd, args, g_env));
 	str = ft_getenv("PATH");
 	all_paths = ft_split(str, ':');
 	i = 0;
@@ -33,7 +31,7 @@ int	ft_execvp(char *cmd, char **args)
 		path = ft_strjoin(all_paths[i], tmp);
 		free(tmp);
 		free(all_paths[i]);
-		execve(path, args, environ);
+		execve(path, args, g_env);
 		free(path);
 		i++;
 	}
