@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 20:43:51 by moerradi          #+#    #+#             */
-/*   Updated: 2022/02/05 20:02:42 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/02/07 04:41:47 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	ft_execvp(char *cmd, char **args)
 	if (ft_strchr(cmd, '/'))
 		return (execve(cmd, args, g_env));
 	str = ft_getenv("PATH");
+	if (!str)
+		return (execve(cmd, args, g_env));
 	all_paths = ft_split(str, ':');
 	i = 0;
 	while (all_paths[i])
@@ -31,7 +33,7 @@ int	ft_execvp(char *cmd, char **args)
 		path = ft_strjoin(all_paths[i], tmp);
 		free(tmp);
 		free(all_paths[i]);
-		execve(path, args, g_env + 3);
+		execve(path, args, g_env + 2);
 		free(path);
 		i++;
 	}

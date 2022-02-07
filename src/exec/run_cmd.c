@@ -6,7 +6,7 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 18:22:05 by moerradi          #+#    #+#             */
-/*   Updated: 2022/02/05 19:30:00 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/02/07 05:02:00 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	is_builtin(t_pipe *cmnd, int fd)
 {
-	if (!ft_strcmp(cmnd->cmd, "top") || ft_strcmp(cmnd->cmd, "man"))
-		ft_putenv("-screen=1");
 	if (!ft_strcmp(cmnd->cmd, "echo"))
 		return (ft_echo(cmnd->args + 1, cmnd->ac - 1, fd));
 	else if (!ft_strcmp(cmnd->cmd, "cd"))
@@ -34,15 +32,20 @@ int	is_builtin(t_pipe *cmnd, int fd)
 		return (127);
 }
 
-void	redirect_io(int in, int out)
+void	redirect_io(int in, int out, int fd[2])
 {
+	(void)fd;
 	if (in != 0)
+	{
 		dup2(in, 0);
+		close(in);
+	}
 	if (out != 1)
 	{
 		dup2(out, 1);
 		if (in != 0)
 			close(in);
+		close(out);
 	}
 }
 
@@ -68,7 +71,7 @@ int	exec_error(char *cmd)
 	return (127);
 }
 
-int	execute_cmd(t_pipe *cmnd, int in, int out)
+int	execute_cmd(t_pipe *cmnd, int in, int out, int fd[2])
 {
 	int		pid;
 	int		status;
@@ -84,7 +87,7 @@ int	execute_cmd(t_pipe *cmnd, int in, int out)
 		{
 			if (in == -1)
 				exit(1);
-			redirect_io(in, out);
+			redirect_io(in, out, fd);
 			if (ft_execvp(cmnd->cmd, cmnd->args) == -1)
 				exit(exec_error(cmnd->cmd));
 		}
@@ -115,13 +118,14 @@ void	run_cmd(t_list *cmd)
 			in = fd[0];
 		get_i_o(cmd, &in, &out, fd);
 		if (((t_pipe *)cmd->content)->cmd)
-			status = execute_cmd((t_pipe *)cmd->content, in, out);
-		set_exit(status);
+		status = execute_cmd((t_pipe *)cmd->content, in, out, fd);
 		if (out != 1)
 			close(out);
 		if (in != 0)
 			close(in);
+		set_exit(status);
 		first = 0;
 		cmd = cmd->next;
 	}
+
 }

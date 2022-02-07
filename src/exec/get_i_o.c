@@ -6,11 +6,23 @@
 /*   By: moerradi <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:13:04 by moerradi          #+#    #+#             */
-/*   Updated: 2022/02/04 23:23:36 by moerradi         ###   ########.fr       */
+/*   Updated: 2022/02/07 08:34:02 by moerradi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+void	expand_di(char **str)
+{
+	char	*tmp;
+
+	if (*str)
+	{
+		tmp = expand(*str);
+		free(*str);
+		*str = tmp;
+	}
+}
 
 int	out_files(t_list *files)
 {
@@ -41,13 +53,15 @@ int	handle_d_i(t_redir *tmp)
 
 	pipe(pp);
 	line = readline("> ");
-	if (ft_strcmp(line, tmp->file))
+	expand_di(&line);
+	if (line && ft_strcmp(line, tmp->file))
 		ft_putendl_fd(line, pp[1]);
-	while (ft_strcmp(line, tmp->file))
+	while (line && ft_strcmp(line, tmp->file))
 	{
 		free(line);
 		line = readline("> ");
-		if (ft_strcmp(line, tmp->file))
+		expand_di(&line);
+		if (line && ft_strcmp(line, tmp->file))
 			ft_putendl_fd(line, pp[1]);
 	}
 	free(line);
